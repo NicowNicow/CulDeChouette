@@ -1,6 +1,9 @@
 <resources>
+
     <string name="app_name">CulDeChouette</string>
 
+    <string name="buttonPlaceholder">C\'est un bouton</string>
     <string name="imagePlaceholder">C\'est une image</string>
-    <string name="touchText">Touchez pour démarrer...</string>
+    <string name="touchText">Touchez pour commencer...</string>
+
 </resources>
