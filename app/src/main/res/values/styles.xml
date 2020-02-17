@@ -7,7 +7,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:background">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor" xmlns:tools="http://schemas.android.com/tools" tools:targetApi="21">@android:color/transparent</item>
+        <item name="android:windowContentTransitions" xmlns:tools="http://schemas.android.com/tools" tools:targetApi="21">true</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>

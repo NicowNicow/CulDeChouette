@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/hostChoiceView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
@@ -15,11 +16,8 @@
         android:contentDescription="@string/buttonPlaceholder"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="@+id/joinButton"
-        app:layout_constraintEnd_toEndOf="@+id/joinButton2"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/joinButton2"
+        app:layout_constraintStart_toStartOf="@+id/roomList"
         app:layout_constraintTop_toTopOf="@+id/joinButton"
-        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/button_texture" />
 
     <ImageButton
@@ -30,15 +28,15 @@
         android:contentDescription="@string/buttonPlaceholder"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.059"
+        app:layout_constraintEnd_toEndOf="@+id/roomList"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.953"
         app:srcCompat="@drawable/button_texture" />
 
     <ImageButton
-        android:id="@+id/joinButton2"
+        android:id="@+id/rulesButton"
         android:layout_width="139dp"
         android:layout_height="64dp"
         android:background="?android:selectableItemBackground"
@@ -46,9 +44,105 @@
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.945"
+        app:layout_constraintHorizontal_bias="0.934"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.046"
         app:srcCompat="@drawable/button_texture" />
+
+    <TextView
+        android:id="@+id/rulesText"
+        android:layout_width="103dp"
+        android:layout_height="44dp"
+        android:fontFamily="@font/faith"
+        android:text="@string/rules"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/rulesButton"
+        app:layout_constraintEnd_toEndOf="@+id/rulesButton"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintStart_toStartOf="@+id/rulesButton"
+        app:layout_constraintTop_toTopOf="@+id/rulesButton"
+        app:layout_constraintVertical_bias="0.48" />
+
+    <TextView
+        android:id="@+id/joinText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/faith"
+        android:text="@string/joinText"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/joinButton"
+        app:layout_constraintEnd_toEndOf="@+id/joinButton"
+        app:layout_constraintStart_toStartOf="@+id/joinButton"
+        app:layout_constraintTop_toTopOf="@+id/joinButton" />
+
+    <TextView
+        android:id="@+id/createText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/faith"
+        android:text="@string/createText"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/creationButton"
+        app:layout_constraintEnd_toEndOf="@+id/creationButton"
+        app:layout_constraintStart_toStartOf="@+id/creationButton"
+        app:layout_constraintTop_toTopOf="@+id/creationButton" />
+
+    <TextView
+        android:id="@+id/usernameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
+        android:fontFamily="@font/grafik"
+        android:text="@string/usernameText"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/roomList"
+        app:layout_constraintEnd_toStartOf="@+id/usernameValue"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.622" />
+
+    <EditText
+        android:id="@+id/usernameValue"
+        android:layout_width="232dp"
+        android:layout_height="41dp"
+        android:layout_marginEnd="164dp"
+        android:alpha="0.4"
+        android:background="@color/black"
+        android:ems="10"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:fontFamily="@font/faith"
+        android:hint="@string/usernamePlaceholder"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/usernameText"
+        app:layout_constraintEnd_toStartOf="@+id/rulesButton"
+        app:layout_constraintTop_toTopOf="@+id/usernameText"
+        app:layout_constraintVertical_bias="0.0"
+        tools:targetApi="o" />
+
+    <ListView
+        android:id="@+id/roomList"
+        android:layout_width="665dp"
+        android:layout_height="185dp"
+        android:alpha="0.4"
+        android:background="#000"
+        app:layout_constraintBottom_toTopOf="@+id/creationButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.53"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rulesButton"
+        app:layout_constraintVertical_bias="0.397">
+
+    </ListView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
