@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CulDeChouette</string>
+    <string name="reverse">Reverse</string>
+    <string name="forward">Forward</string>
 </resources>

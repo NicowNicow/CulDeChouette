@@ -9,32 +9,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".ScoreboardActivity"
-            android:screenOrientation="landscape"/>
-        <activity
-            android:name=".GameActivity"
-            android:screenOrientation="landscape"/>
-        <activity
-            android:name=".CreationRoomActivity"
-            android:screenOrientation="landscape"/>
-        <activity
-            android:name=".WaitingRoomActivity"
-            android:screenOrientation="landscape"/>
-        <activity
-            android:name=".HostChoiceActivity"
-            android:screenOrientation="landscape"/>
-        <activity
-            android:name=".TutorialActivity"
-            android:screenOrientation="landscape"/>
-        <activity
-            android:name=".MainActivity"
-            android:screenOrientation="landscape">
+        <activity android:name=".Test">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ScoreboardActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".GameActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".CreationRoomActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".WaitingRoomActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".HostChoiceActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".TutorialActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="landscape">
         </activity>
     </application>
 
