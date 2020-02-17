@@ -21,6 +21,7 @@ class Test : AppCompatActivity() {
         val image: ImageView = findViewById(R.id.dice)
         val hyperspaceJump: Animation =
             AnimationUtils.loadAnimation(this, R.anim.hyperspace_jump)
+        
         image.startAnimation(hyperspaceJump)
     }
 
