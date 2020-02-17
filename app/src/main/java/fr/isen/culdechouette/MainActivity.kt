@@ -13,12 +13,15 @@ import android.view.KeyEvent.KEYCODE_BACK
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.media.MediaPlayer
 import android.view.*
 
 
 //Creation of the main menu, nothing really interesting here
 
 class MainActivity : AppCompatActivity() {
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,12 +40,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun doLogin() {
-        val intentHome = Intent( this@MainActivity, HostChoiceActivity::class.java)
-        intentHome.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION
-        this@MainActivity.startActivity(intentHome)
-    }
-
-    private fun hideNavBar() {
+        val scrollSound = MediaPlayer.create(this,R.raw.door)
+        scrollSound.start()
+        Timer("SoundTemporisation", false).schedule(500) {
+            val intentHome = Intent( this@MainActivity, HostChoiceActivity::class.java)
+            intentHome.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION
+            this@MainActivity.startActivity(intentHome)
+        }
     }
 
 }
