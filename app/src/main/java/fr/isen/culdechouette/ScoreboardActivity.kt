@@ -22,4 +22,6 @@ class ScoreboardActivity : AppCompatActivity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         actionBar?.hide()
     }
+
+
 }

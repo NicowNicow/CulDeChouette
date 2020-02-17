@@ -1,8 +1,10 @@
 package fr.isen.culdechouette
 
 
+import android.content.Context
 import kotlinx.android.synthetic.main.activity_main.*
 import android.content.Intent
+import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View.SYSTEM_UI_FLAG_IMMERSIVE
@@ -15,21 +17,25 @@ import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.media.MediaPlayer
 import android.view.*
+import android.widget.Toast
 
 
 //Creation of the main menu, nothing really interesting here
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ShakeDetector.Listener {
 
+    private lateinit var shakeDetector: ShakeDetector
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        shakeDetector = ShakeDetector(this)
+
         setContentView(R.layout.activity_main)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or SYSTEM_UI_FLAG_IMMERSIVE
         window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         actionBar?.hide()
-        mainID.setOnClickListener{ doLogin() }
+        //mainID.setOnClickListener{ doLogin() }
     }
 
     override fun onResume () {
@@ -48,5 +54,21 @@ class MainActivity : AppCompatActivity() {
             this@MainActivity.startActivity(intentHome)
         }
     }
+    override fun hearShake() {
 
+    }
+
+    override fun onStart() {
+        val sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show()
+        shakeDetector.start(sensorManager)
+        super.onStart()
+    }
+
+    override fun onStop() {
+        shakeDetector.stop()
+        Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show()
+        super.onStop()
+    }
 }
+
