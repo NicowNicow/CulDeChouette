@@ -5,6 +5,150 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
+    android:paddingBottom="40dp"
     tools:context=".CreationRoomActivity">
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="139dp"
+        android:layout_height="64dp"
+        android:background="?android:selectableItemBackground"
+        android:contentDescription="@string/buttonPlaceholder"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.027"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.046"
+        app:srcCompat="@drawable/button_texture" />
+
+    <TextView
+        android:id="@+id/backText"
+        android:layout_width="103dp"
+        android:layout_height="44dp"
+        android:fontFamily="@font/faith"
+        android:text="@string/back"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/backButton"
+        app:layout_constraintEnd_toEndOf="@+id/backButton"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintStart_toStartOf="@+id/backButton"
+        app:layout_constraintTop_toTopOf="@+id/backButton"
+        app:layout_constraintVertical_bias="0.48" />
+
+    <ImageButton
+        android:id="@+id/creationButton"
+        android:layout_width="139dp"
+        android:layout_height="64dp"
+        android:background="?android:selectableItemBackground"
+        android:contentDescription="@string/buttonPlaceholder"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.974"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.951"
+        app:srcCompat="@drawable/button_texture" />
+
+    <TextView
+        android:id="@+id/creationText"
+        android:layout_width="103dp"
+        android:layout_height="44dp"
+        android:fontFamily="@font/faith"
+        android:text="@string/createText"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/creationButton"
+        app:layout_constraintEnd_toEndOf="@+id/creationButton"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintStart_toStartOf="@+id/creationButton"
+        app:layout_constraintTop_toTopOf="@+id/creationButton"
+        app:layout_constraintVertical_bias="0.48" />
+
+    <TextView
+        android:id="@+id/roomText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/grafik"
+        android:text="@string/roomName"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/creationButton"
+        app:layout_constraintEnd_toEndOf="@+id/creationButton"
+        app:layout_constraintHorizontal_bias="0.103"
+        app:layout_constraintStart_toStartOf="@+id/backButton"
+        app:layout_constraintTop_toBottomOf="@+id/backButton"
+        app:layout_constraintVertical_bias="0.235" />
+
+    <TextView
+        android:id="@+id/numberText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/grafik"
+        android:text="@string/numberPlayer"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/creationButton"
+        app:layout_constraintEnd_toEndOf="@+id/roomText"
+        app:layout_constraintStart_toStartOf="@+id/roomText"
+        app:layout_constraintTop_toBottomOf="@+id/roomText" />
+
+    <EditText
+        android:id="@+id/roomNameValue"
+        android:layout_width="314dp"
+        android:layout_height="42dp"
+        android:alpha="0.4"
+        android:background="@color/black"
+        android:ems="10"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:fontFamily="@font/faith"
+        android:hint="@string/roomNamePlaceholder"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/roomText"
+        app:layout_constraintEnd_toEndOf="@+id/creationButton"
+        app:layout_constraintStart_toEndOf="@+id/roomText"
+        app:layout_constraintTop_toTopOf="@+id/roomText"
+        tools:targetApi="o" />
+
+    <TextView
+        android:id="@+id/creationTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/grafik"
+        android:text="@string/creationTitle"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/roomNameValue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintStart_toEndOf="@+id/backButton"
+        app:layout_constraintTop_toTopOf="@+id/backButton"
+        app:layout_constraintVertical_bias="0.098" />
+
+    <Spinner
+        android:id="@+id/numberPlayerValue"
+        android:layout_width="95dp"
+        android:layout_height="43dp"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:layout_marginLeft="5dp"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="@+id/numberText"
+        app:layout_constraintEnd_toEndOf="@+id/roomNameValue"
+        app:layout_constraintStart_toStartOf="@+id/roomNameValue"
+        app:layout_constraintTop_toTopOf="@+id/numberText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

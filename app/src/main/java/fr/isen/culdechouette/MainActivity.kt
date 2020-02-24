@@ -11,11 +11,15 @@ import android.media.MediaPlayer
 import android.view.*
 
 
+
+
 //Creation of the main menu, nothing really interesting here
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val intentMusic = Intent(this@MainActivity, BackgroundMusicService::class.java)
+        startService(intentMusic)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mainID.setOnClickListener{ doLogin() }

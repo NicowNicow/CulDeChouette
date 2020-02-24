@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".SettingsActivity">
+
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/grafik"
+        android:text="@string/settingsTitle"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="@+id/backButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.429"
+        app:layout_constraintStart_toEndOf="@+id/backButton"
+        app:layout_constraintTop_toTopOf="@+id/backButton"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="139dp"
+        android:layout_height="64dp"
+        android:background="?android:selectableItemBackground"
+        android:contentDescription="@string/buttonPlaceholder"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.027"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.046"
+        app:srcCompat="@drawable/button_texture" />
+
+    <TextView
+        android:id="@+id/backText"
+        android:layout_width="89dp"
+        android:layout_height="33dp"
+        android:fontFamily="@font/faith"
+        android:text="@string/back"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/backButton"
+        app:layout_constraintEnd_toEndOf="@+id/backButton"
+        app:layout_constraintHorizontal_bias="0.575"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/backButton"
+        app:layout_constraintVertical_bias="0.387" />
+
+    <ImageButton
+        android:id="@+id/muteButton"
+        android:layout_width="86dp"
+        android:layout_height="92dp"
+        android:contentDescription="@string/imagePlaceholder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.226"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backButton"
+        app:layout_constraintVertical_bias="0.464"
+        app:srcCompat="@android:drawable/ic_lock_silent_mode_off" />
+
+    <SeekBar
+        android:id="@+id/volumeBar"
+        style="@android:style/Widget.SeekBar"
+        android:layout_width="260dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="104dp"
+        android:max="100"
+        android:progress="100"
+        app:layout_constraintStart_toEndOf="@+id/muteButton"
+        app:layout_constraintTop_toBottomOf="@+id/volumeText" />
+
+    <TextView
+        android:id="@+id/volumeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/grafik"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="@+id/volumeBar"
+        app:layout_constraintStart_toStartOf="@+id/volumeBar"
+        app:layout_constraintTop_toTopOf="@+id/muteButton" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,7 @@
     <string name="app_name">CulDeChouette</string>
     <string name="buttonPlaceholder">C\'est un bouton</string>
     <string name="imagePlaceholder">C\'est une image</string>
-    <string name ="usernamePlaceholder">Pseudonyme</string>
+    <string name="usernamePlaceholder">Pseudonyme</string>
     <string name="rules">Regles</string>
     <string name="back">Retour</string>
 
@@ -15,12 +15,22 @@
     <string name="createText">Creer</string>
     <string name="joinText">Joindre</string>
     <string name="usernameText">Pseudo:</string>
-    <string name ="errorUsername">Rentrez un pseudo!</string>
+    <string name="errorUsername">Rentrez un pseudo!</string>
     <string name="errorSelectionRoom">Sélectionez une salle à rejoindre!</string>
     <string name="errorNoRoom">Aucune salle existante!</string>
 
     //TutorialActivity
-    <string name="title">Le cul de chouette</string>
+    <string name="rulesTitle">Le cul d\'chouette</string>
     /*Faut rajouter le reste des règles ici */
 
+    //SettingsActivity
+    <string name="settingsTitle">Parametres</string>
+    <string name="volumePercentage">%1$s%%</string>
+
+    //CreationRoomActivity
+    <string name="creationTitle">Creer une salle</string>
+    <string name="roomName">Nom de la Salle :</string>
+    <string name="numberPlayer">Nombre de joueurs :</string>
+    <string name="baseRoomName">Salle de %1$s</string>
+    <string name="roomNamePlaceholder">Nom de la salle</string>
 </resources>

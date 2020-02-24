@@ -41,16 +41,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/grafik"
-        android:text="@string/title"
+        android:text="@string/rulesTitle"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="@+id/backButton"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/settingsButton"
+        app:layout_constraintHorizontal_bias="0.537"
         app:layout_constraintStart_toEndOf="@+id/backButton"
-        app:layout_constraintTop_toTopOf="@+id/backButton" />
+        app:layout_constraintTop_toTopOf="@+id/backButton"
+        app:layout_constraintVertical_bias="0.529" />
 
     <ListView
+        android:id="@+id/listRules"
         android:layout_width="645dp"
         android:layout_height="249dp"
         android:alpha="0.4"
@@ -59,5 +62,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/backButton" />
+
+    <ImageButton
+        android:id="@+id/settingsButton"
+        android:layout_width="53dp"
+        android:layout_height="47dp"
+        android:layout_marginEnd="52dp"
+        android:contentDescription="@string/imagePlaceholder"
+        app:layout_constraintBottom_toBottomOf="@+id/titleText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/titleText"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@android:drawable/ic_menu_preferences" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="fr.isen.culdechouette">
 
     <application
@@ -7,37 +8,51 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:windowSoftInputMode="adjustResize"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning"
+        android:windowSoftInputMode="adjustResize">
+        <activity android:name=".SettingsActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ScoreboardActivity"
-            android:screenOrientation="landscape"/>
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".GameActivity"
-            android:screenOrientation="landscape"/>
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".CreationRoomActivity"
-            android:screenOrientation="landscape"/>
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".WaitingRoomActivity"
-            android:screenOrientation="landscape"/>
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".HostChoiceActivity"
-            android:windowSoftInputMode="stateAlwaysVisible"
-            android:screenOrientation="landscape"/>
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape"/>
         <activity
             android:name=".TutorialActivity"
-            android:screenOrientation="landscape"/>
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="landscape">
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".BackgroundMusicService"
+            android:enabled="true" />
     </application>
 
 </manifest>

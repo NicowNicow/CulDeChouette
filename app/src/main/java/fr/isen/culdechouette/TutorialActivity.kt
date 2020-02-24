@@ -1,6 +1,7 @@
 package fr.isen.culdechouette
 
 
+import android.content.Intent
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,7 +19,8 @@ class TutorialActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tutorial)
-        backButton.setOnClickListener { doRules() }
+        backButton.setOnClickListener { doBack() }
+        settingsButton.setOnClickListener { doSettings() }
     }
 
     override fun onResume () {
@@ -28,11 +30,17 @@ class TutorialActivity : AppCompatActivity() {
         actionBar?.hide()
     }
 
-    private fun doRules() {
+    private fun doBack() {
         val scrollSound = MediaPlayer.create(this, R.raw.elder_scroll)
         scrollSound.start()
         Timer("SoundTemporisation", false).schedule(500) {
             finish()
         }
+    }
+
+    private fun doSettings() {
+        val intentSettings = Intent(this@TutorialActivity, SettingsActivity::class.java)
+        intentSettings.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        this@TutorialActivity.startActivity(intentSettings)
     }
 }
