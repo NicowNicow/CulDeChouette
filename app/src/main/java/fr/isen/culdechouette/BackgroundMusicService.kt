@@ -7,7 +7,6 @@ import android.content.SharedPreferences
 import android.os.IBinder
 import android.media.MediaPlayer
 import android.os.Binder
-import android.util.Log
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
@@ -20,6 +19,7 @@ class BackgroundMusicService: Service(){
     private lateinit var backgroundMusic: MediaPlayer
     private val binder = LocalBinder()
     private var mediaPauseLength: Int = 0
+    private var firstStart: Boolean = false
 
     override fun onBind(arg0: Intent): IBinder? {
         return binder
@@ -32,7 +32,7 @@ class BackgroundMusicService: Service(){
     inner class AppLifecycleObserver : LifecycleObserver {
         @OnLifecycleEvent(Lifecycle.Event.ON_START)
         fun onForeground() {
-            if (::backgroundMusic.isInitialized) {
+            if ((::backgroundMusic.isInitialized)&&(firstStart)) {
                 restartMusic()
             }
         }
@@ -60,6 +60,7 @@ class BackgroundMusicService: Service(){
         if (muteSaved == "false")
         {
             backgroundMusic.start()
+            firstStart = true
             return START_STICKY
         }
         return START_STICKY

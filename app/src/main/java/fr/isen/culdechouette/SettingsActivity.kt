@@ -78,25 +78,34 @@ class SettingsActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener{
     }
 
     private fun doMute() {
-        //if (muteButton.drawable != android.R.drawable.ic_lock_silent_mode_off)
-        //{
-        //    Picasso.get().load(android.R.drawable.ic_lock_silent_mode).into(muteButton)
-        //}
-        //if (muteButton?.drawable.equals(android.R.drawable.ic_lock_silent_mode))
-        //{
-        //    Picasso.get().load(android.R.drawable.ic_lock_silent_mode_off).into(muteButton)
-        //}
+        val muteSaved = musicPref?.getString("muteKey", null)?:"false"
+        if (muteSaved == "false") {
+            Picasso.get().load(android.R.drawable.ic_lock_silent_mode).into(muteButton)
+            musicPref?.edit()?.putString("muteKey", "true")?.apply()
+            musicService.pauseMusic()
+        }
+        if (muteSaved == "true") {
+            Picasso.get().load(android.R.drawable.ic_lock_silent_mode_off).into(muteButton)
+            musicPref?.edit()?.putString("muteKey", "false")?.apply()
+            musicService.restartMusic()
+        }
     }
 
     private fun checkPreferences() {
         val volumeSaved = musicPref?.getString("volumeKey", null)?:"100"
+        val muteSaved = musicPref?.getString("muteKey", null)?:"false"
         volumeText.text = applicationContext.getString(R.string.volumePercentage, volumeSaved)
         volumeBar.progress = volumeSaved.toInt()
-        //val muteSaved = musicPref?.getString("muteKey", null)?:"false"
+        if (muteSaved == "false") {
+            Picasso.get().load(android.R.drawable.ic_lock_silent_mode_off).into(muteButton)
+        }
+        if (muteSaved == "true") {
+            Picasso.get().load(android.R.drawable.ic_lock_silent_mode).into(muteButton)
+        }
     }
 
     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) { //Method of the OnSeekBarChangeListener Interface
-        val volumePercentage = applicationContext.getString(R.string.volumePercentage, progress)
+        val volumePercentage = applicationContext.getString(R.string.volumePercentage, progress.toString())
         volumeText.text = volumePercentage
         musicPref?.edit()?.putString("volumeKey", progress.toString())?.apply()
         if (musicServiceBound) {
