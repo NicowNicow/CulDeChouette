@@ -7,4 +7,48 @@
     android:background="@drawable/background"
     tools:context=".HostChoiceActivity">
 
+    <ImageButton
+        android:id="@+id/creationButton"
+        android:layout_width="139dp"
+        android:layout_height="64dp"
+        android:background="?android:selectableItemBackground"
+        android:contentDescription="@string/buttonPlaceholder"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="@+id/joinButton"
+        app:layout_constraintEnd_toEndOf="@+id/joinButton2"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/joinButton2"
+        app:layout_constraintTop_toTopOf="@+id/joinButton"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/button_texture" />
+
+    <ImageButton
+        android:id="@+id/joinButton"
+        android:layout_width="139dp"
+        android:layout_height="64dp"
+        android:background="?android:selectableItemBackground"
+        android:contentDescription="@string/buttonPlaceholder"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.059"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.953"
+        app:srcCompat="@drawable/button_texture" />
+
+    <ImageButton
+        android:id="@+id/joinButton2"
+        android:layout_width="139dp"
+        android:layout_height="64dp"
+        android:background="?android:selectableItemBackground"
+        android:contentDescription="@string/buttonPlaceholder"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.945"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.046"
+        app:srcCompat="@drawable/button_texture" />
 </androidx.constraintlayout.widget.ConstraintLayout>
