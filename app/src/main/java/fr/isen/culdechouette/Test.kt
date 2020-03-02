@@ -10,7 +10,6 @@ import android.view.WindowManager
 import android.view.animation.*
 import android.view.animation.Animation.AnimationListener
 import kotlinx.android.synthetic.main.activity_test.*
-import kotlinx.android.synthetic.main.activity_test.view.*
 import kotlin.collections.ArrayList
 
 class Test : AppCompatActivity(), ShakeDetector.Listener {
