@@ -12,6 +12,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_host_choice.*
 import java.util.*
 import kotlin.concurrent.schedule
@@ -22,11 +23,36 @@ import kotlin.concurrent.schedule
 class HostChoiceActivity : AppCompatActivity() {
 
     private var usernamePref: SharedPreferences? = null
+    lateinit var roomList: MutableList<Room>
+    lateinit var firebaseRef: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        usernamePref = getSharedPreferences("preferedName", Context.MODE_PRIVATE)
         setContentView(R.layout.activity_host_choice)
+        roomList = mutableListOf()
+        firebaseRef = FirebaseDatabase.getInstance().getReference("waiting_rooms")
+        firebaseRef.addValueEventListener(object: ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+                throw error.toException()
+            }
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    roomList.clear()
+                    for (index in snapshot.children){
+                        var userCount = index.child("users").childrenCount
+                        firebaseRef.child(index.key!!).child("room_key").setValue(index.key!!)
+                        firebaseRef.child(index.key!!).child("user_count").setValue(userCount)
+                        if (((userCount.toString().toInt())<(index.child("capacity").value.toString().toInt()))&&(!index.child("game_started_boolean").value.toString().toBoolean())) {
+                            val room = index.getValue(Room::class.java)
+                            roomList.add(room!!)
+                        }
+                    }
+                    val adapter = RoomListAdapter(applicationContext, R.layout.rooms_list, roomList )
+                    roomListView.adapter = adapter
+                }
+            }
+        })
+        usernamePref = getSharedPreferences("preferedName", Context.MODE_PRIVATE)
         checkPreferences()
         rulesButton.setOnClickListener { doRules() }
         joinButton.setOnClickListener { doJoin() }
@@ -81,4 +107,6 @@ class HostChoiceActivity : AppCompatActivity() {
         val usernameSaved = usernamePref?.getString("usernameKey", null)?:""
         usernameValue?.setText(usernameSaved)
     }
+
+
 }

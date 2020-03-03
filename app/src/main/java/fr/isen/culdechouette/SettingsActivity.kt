@@ -21,7 +21,6 @@ class SettingsActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener{
     private var musicPref: SharedPreferences? = null
     private lateinit var musicService: BackgroundMusicService
     private var musicServiceBound: Boolean = false
-    private var muted: Boolean = false
 
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, service: IBinder) {
@@ -53,13 +52,6 @@ class SettingsActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener{
         actionBar?.hide()
         if (!musicServiceBound) {
             Intent(this, BackgroundMusicService::class.java).also { intent -> bindService(intent, connection, Context.BIND_AUTO_CREATE) }
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        if (musicServiceBound) {
-            musicService.pauseMusic()
         }
     }
 

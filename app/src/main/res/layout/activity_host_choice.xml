@@ -16,7 +16,7 @@
         android:contentDescription="@string/buttonPlaceholder"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="@+id/joinButton"
-        app:layout_constraintStart_toStartOf="@+id/roomList"
+        app:layout_constraintStart_toStartOf="@+id/roomListView"
         app:layout_constraintTop_toTopOf="@+id/joinButton"
         app:srcCompat="@drawable/button_texture" />
 
@@ -28,7 +28,7 @@
         android:contentDescription="@string/buttonPlaceholder"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/roomList"
+        app:layout_constraintEnd_toEndOf="@+id/roomListView"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -100,7 +100,7 @@
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/roomList"
+        app:layout_constraintBottom_toTopOf="@+id/roomListView"
         app:layout_constraintEnd_toStartOf="@+id/usernameValue"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -131,7 +131,7 @@
         tools:targetApi="o" />
 
     <ListView
-        android:id="@+id/roomList"
+        android:id="@+id/roomListView"
         android:layout_width="665dp"
         android:layout_height="185dp"
         android:alpha="0.4"
