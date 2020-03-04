@@ -13,6 +13,8 @@ import kotlinx.android.synthetic.main.activity_test.*
 import kotlin.collections.ArrayList
 
 class Test : AppCompatActivity(), ShakeDetector.Listener {
+    
+    //Tu peux passer ces var en companion object si tu en as besoin dans d'autres fichiers
     var imageList = ArrayList<Int>()
     var culDeChouetteList = ArrayList<Int>()
     var finaldice1 = 0
