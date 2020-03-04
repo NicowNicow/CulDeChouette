@@ -13,13 +13,13 @@ import kotlinx.android.synthetic.main.activity_test.*
 import kotlin.collections.ArrayList
 
 class Test : AppCompatActivity(), ShakeDetector.Listener {
-
     var imageList = ArrayList<Int>()
     var culDeChouetteList = ArrayList<Int>()
     var finaldice1 = 0
     var finaldice2 = 0
     var finalCDC = 0
     var premierLancer = true
+    var sirop = 0
 
     private lateinit var shakeDetector: ShakeDetector
     var i =0
@@ -40,14 +40,13 @@ class Test : AppCompatActivity(), ShakeDetector.Listener {
         override fun onFinish() {
             i=0
             culDeChouette.setImageResource(culDeChouetteList[finalCDC])
-            premierLancer = true
+            //premierLancer = true
         }
     }
 
 
 
-    var countDownTimer = object: CountDownTimer(2600,100){
-
+    /*var countDownTimer = object: CountDownTimer(2600,100){
         override fun onTick(millisUntilFinished: Long) {
             val randomdice1 = (0..5).random()
             val randomdice2 = (0..5).random()
@@ -69,6 +68,44 @@ class Test : AppCompatActivity(), ShakeDetector.Listener {
             premierLancer = false
             i=0
         }
+    }*/
+
+    var countDownFirstDice = object: CountDownTimer(2600,100){
+        override fun onTick(millisUntilFinished: Long) {
+            val random = (0..5).random()
+
+            when (i){
+                in 0..14 -> dice1.setImageResource(imageList[random])
+                in 15..21-> if(i%2 == 0) { dice1.setImageResource(imageList[random]) }
+                in 22..24 -> if(i%3 == 0) {dice1.setImageResource(imageList[random]) }
+            }
+            i++
+        }
+
+        override fun onFinish() {
+            dice1.setImageResource(imageList[finaldice1])
+            i=0
+            premierLancer = false
+        }
+    }
+
+    var countDownSecondDice = object: CountDownTimer(2600,100){
+        override fun onTick(millisUntilFinished: Long) {
+            val random = (0..5).random()
+
+            when (i){
+                in 0..14 -> dice2.setImageResource(imageList[random])
+                in 15..21-> if(i%2 == 0) { dice2.setImageResource(imageList[random]) }
+                in 22..24 -> if(i%3 == 0) {dice2.setImageResource(imageList[random]) }
+            }
+            i++
+        }
+
+        override fun onFinish() {
+            dice2.setImageResource(imageList[finaldice2])
+            i=0
+        }
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,9 +113,7 @@ class Test : AppCompatActivity(), ShakeDetector.Listener {
 
         shakeDetector = ShakeDetector(this)
 
-
         setContentView(R.layout.activity_test)
-
 
         imageList.add(R.drawable.chouette1)
         imageList.add(R.drawable.chouette2)
@@ -97,7 +132,32 @@ class Test : AppCompatActivity(), ShakeDetector.Listener {
         Button.setOnClickListener {
             animation()
         }
+
+        dice1.setOnClickListener{
+            dice1.isClickable = false
+            dice2.isClickable = false
+            culDeChouette.isClickable = false
+            sirop = 1
+            animation()
+        }
+
+        dice2.setOnClickListener{
+            dice1.isClickable = false
+            dice2.isClickable = false
+            culDeChouette.isClickable = false
+            sirop = 2
+            animation()
+        }
+
+        culDeChouette.setOnClickListener {
+            dice1.isClickable = false
+            dice2.isClickable = false
+            culDeChouette.isClickable = false
+            sirop = 3
+            animation()
+        }
     }
+
 
 
     private fun animation() {
@@ -115,28 +175,45 @@ class Test : AppCompatActivity(), ShakeDetector.Listener {
                 shakeDetector.start(sensorManager)
                 Button.isEnabled = true
                 Button.isClickable = true
+                dice1.isClickable = true
+                dice2.isClickable = true
+                culDeChouette.isClickable = true
+                sirop = 0
             }
-
 
             override fun onAnimationStart(animation: Animation?) {
-                if(premierLancer){
-                    countDownTimer.start()
+                when (sirop){
+                    0 ->{
+                        if(premierLancer){
+                            countDownFirstDice.start()
+                            countDownSecondDice.start()
+                        }
+                        else {
+                            countDownCDC.start()
+                        }
+                        shakeDetector.stop()
+                        Button.isEnabled = false
+                        Button.isClickable = false
+                    }
+                    1->countDownFirstDice.start()
+                    2->countDownSecondDice.start()
+                    3->countDownCDC.start()
                 }
-                else{
-                    countDownCDC.start()
-                }
-                shakeDetector.stop()
-                Button.isEnabled = false
-                Button.isClickable = false
             }
         })
-        if(premierLancer){
-            dice1.startAnimation(hyperspaceJump)
-            dice2.startAnimation(hyperspaceJump)
+        when (sirop){
+            0->{if(premierLancer){
+                dice1.startAnimation(hyperspaceJump)
+                dice2.startAnimation(hyperspaceJump)
+            }
+            else {
+                culDeChouette.startAnimation(hyperspaceJump)
+            }}
+            1->dice1.startAnimation(hyperspaceJump)
+            2->dice2.startAnimation(hyperspaceJump)
+            3->culDeChouette.startAnimation(hyperspaceJump)
         }
-        else {
-            culDeChouette.startAnimation(hyperspaceJump)
-        }
+        //sirop = 0
 
     }
     override fun onResume () {
@@ -163,6 +240,12 @@ class Test : AppCompatActivity(), ShakeDetector.Listener {
         super.onStop()
     }
 
+
+    private fun sirop(){
+        dice1.isClickable = true
+        dice2.isClickable = true
+        culDeChouette.isClickable = true
+    }
 
 
 }
