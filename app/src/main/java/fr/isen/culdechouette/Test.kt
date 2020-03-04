@@ -85,7 +85,7 @@ class Test : AppCompatActivity(), ShakeDetector.Listener {
         override fun onFinish() {
             dice1.setImageResource(imageList[finaldice1])
             i=0
-            premierLancer = false
+            //premierLancer = false
         }
     }
 
@@ -187,9 +187,11 @@ class Test : AppCompatActivity(), ShakeDetector.Listener {
                         if(premierLancer){
                             countDownFirstDice.start()
                             countDownSecondDice.start()
+                            premierLancer = false
                         }
                         else {
                             countDownCDC.start()
+                            premierLancer = true
                         }
                         shakeDetector.stop()
                         Button.isEnabled = false
