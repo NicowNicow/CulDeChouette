@@ -16,6 +16,8 @@
     <string name="joinText">Joindre</string>
     <string name="usernameText">Pseudo:</string>
     <string name="errorUsername">Rentrez un pseudo!</string>
+    <string name="errorRoom">Choisissez une salle!</string>
+    <string name="errorBoth">Choisissez un pseudo et une salle!</string>
     <string name="errorSelectionRoom">Sélectionez une salle à rejoindre!</string>
     <string name="errorNoRoom">Aucune salle existante!</string>
     <string name="capacityRoom">%1$d\/%2$d</string>
@@ -34,4 +36,22 @@
     <string name="numberPlayer">Nombre de joueurs :</string>
     <string name="baseRoomName">Salle de %1$s</string>
     <string name="roomNamePlaceholder">Nom de la salle</string>
+    <string name="askPassword">Salle Privee?</string>
+    <string name="password">Mot de Passe:</string>
+    <string name="passwordPlaceholder">Mot de Passe</string>
+
+    //WaitingRoomActivity
+    <string name="readyText">Pret</string>
+    <string name="waitingTitle">Salle d\'attente</string>
+
+    //PasswordPopup
+    <string name="titlePassword">Entrez le mot de passe:</string>
+    <string name="validateButton">Valider</string>
+    <string name="incorrectPassword">Mot de Passe Incorrect!</string>
+
+    //MatchmakingPopup
+    <string name="matchmakingText">Voulez-vous arreter le matchmaking et revenir au menu principal?</string>
+    <string name="cancelButton">Annuler</string>
+    <string name="confirmButton">Confirmer</string>
+
 </resources>

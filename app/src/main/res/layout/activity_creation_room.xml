@@ -47,10 +47,10 @@
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.974"
+        app:layout_constraintHorizontal_bias="0.972"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.951"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/button_texture" />
 
     <TextView
@@ -82,7 +82,7 @@
         app:layout_constraintHorizontal_bias="0.103"
         app:layout_constraintStart_toStartOf="@+id/backButton"
         app:layout_constraintTop_toBottomOf="@+id/backButton"
-        app:layout_constraintVertical_bias="0.235" />
+        app:layout_constraintVertical_bias="0.13" />
 
     <TextView
         android:id="@+id/numberText"
@@ -95,13 +95,15 @@
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/creationButton"
         app:layout_constraintEnd_toEndOf="@+id/roomText"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/roomText"
-        app:layout_constraintTop_toBottomOf="@+id/roomText" />
+        app:layout_constraintTop_toBottomOf="@+id/roomText"
+        app:layout_constraintVertical_bias="0.231" />
 
     <EditText
         android:id="@+id/roomNameValue"
-        android:layout_width="314dp"
-        android:layout_height="42dp"
+        android:layout_width="302dp"
+        android:layout_height="35dp"
         android:alpha="0.4"
         android:background="@color/black"
         android:ems="10"
@@ -118,6 +120,7 @@
         app:layout_constraintEnd_toEndOf="@+id/creationButton"
         app:layout_constraintStart_toEndOf="@+id/roomText"
         app:layout_constraintTop_toTopOf="@+id/roomText"
+        app:layout_constraintVertical_bias="0.0"
         tools:targetApi="o" />
 
     <TextView
@@ -138,17 +141,84 @@
 
     <Spinner
         android:id="@+id/numberPlayerValue"
-        android:layout_width="95dp"
-        android:layout_height="43dp"
+        android:layout_width="72dp"
+        android:layout_height="35dp"
         android:layout_centerVertical="true"
         android:layout_gravity="center"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="20dp"
         android:background="@android:color/transparent"
         android:gravity="center"
         android:spinnerMode="dropdown"
         app:layout_constraintBottom_toBottomOf="@+id/numberText"
+        app:layout_constraintStart_toEndOf="@+id/numberText"
+        app:layout_constraintTop_toTopOf="@+id/numberText"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/privateRoomText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:fontFamily="@font/grafik"
+        android:text="@string/askPassword"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/numberText"
+        app:layout_constraintStart_toEndOf="@+id/numberPlayerValue"
+        app:layout_constraintTop_toTopOf="@+id/numberText"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/passwordText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/grafik"
+        android:text="@string/password"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/creationButton"
+        app:layout_constraintEnd_toEndOf="@+id/numberText"
+        app:layout_constraintHorizontal_bias="0.597"
+        app:layout_constraintStart_toStartOf="@+id/numberText"
+        app:layout_constraintTop_toBottomOf="@+id/numberText"
+        app:layout_constraintVertical_bias="0.90999997" />
+
+    <EditText
+        android:id="@+id/passwordValue"
+        android:layout_width="311dp"
+        android:layout_height="34dp"
+        android:alpha="0.4"
+        android:background="@color/black"
+        android:ems="10"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:fontFamily="@font/faith"
+        android:hint="@string/passwordPlaceholder"
+        android:importantForAutofill="no"
+        android:inputType="textVisiblePassword"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/passwordText"
         app:layout_constraintEnd_toEndOf="@+id/roomNameValue"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/roomNameValue"
-        app:layout_constraintTop_toTopOf="@+id/numberText" />
+        app:layout_constraintTop_toTopOf="@+id/passwordText"
+        app:layout_constraintVertical_bias="0.0"
+        tools:targetApi="o" />
+
+    <Switch
+        android:id="@+id/privateSwitch"
+        android:layout_width="0dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/privateRoomText"
+        app:layout_constraintStart_toEndOf="@+id/privateRoomText"
+        app:layout_constraintTop_toTopOf="@+id/privateRoomText"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,7 +28,6 @@ class SettingsActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener{
             musicService = binder.getService()
             musicServiceBound = true
         }
-
         override fun onServiceDisconnected(arg0: ComponentName) {
             musicServiceBound = false
         }

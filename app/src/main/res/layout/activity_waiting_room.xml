@@ -7,4 +7,93 @@
     android:background="@drawable/background"
     tools:context=".WaitingRoomActivity">
 
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="139dp"
+        android:layout_height="64dp"
+        android:background="?android:selectableItemBackground"
+        android:contentDescription="@string/buttonPlaceholder"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.027"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.046"
+        app:srcCompat="@drawable/button_texture" />
+
+    <TextView
+        android:id="@+id/backText"
+        android:layout_width="103dp"
+        android:layout_height="44dp"
+        android:fontFamily="@font/faith"
+        android:text="@string/back"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/backButton"
+        app:layout_constraintEnd_toEndOf="@+id/backButton"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintStart_toStartOf="@+id/backButton"
+        app:layout_constraintTop_toTopOf="@+id/backButton"
+        app:layout_constraintVertical_bias="0.48" />
+
+    <ImageButton
+        android:id="@+id/readyButton"
+        android:layout_width="139dp"
+        android:layout_height="64dp"
+        android:background="?android:selectableItemBackground"
+        android:contentDescription="@string/buttonPlaceholder"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.972"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/button_texture" />
+
+    <TextView
+        android:id="@+id/readyText"
+        android:layout_width="103dp"
+        android:layout_height="44dp"
+        android:fontFamily="@font/faith"
+        android:text="@string/readyText"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/readyButton"
+        app:layout_constraintEnd_toEndOf="@+id/readyButton"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintStart_toStartOf="@+id/readyButton"
+        app:layout_constraintTop_toTopOf="@+id/readyButton"
+        app:layout_constraintVertical_bias="0.48" />
+
+    <TextView
+        android:id="@+id/waitingTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/grafik"
+        android:text="@string/waitingTitle"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="@+id/backButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintStart_toEndOf="@+id/backButton"
+        app:layout_constraintTop_toTopOf="@+id/backButton"
+        app:layout_constraintVertical_bias="0.555" />
+
+    <ListView
+        android:id="@+id/lobbyList"
+        android:layout_width="538dp"
+        android:layout_height="157dp"
+        android:alpha="0.4"
+        android:background="#000"
+        app:layout_constraintBottom_toTopOf="@+id/readyButton"
+        app:layout_constraintEnd_toEndOf="@+id/readyButton"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="@+id/backButton"
+        app:layout_constraintTop_toBottomOf="@+id/backButton"
+        app:layout_constraintVertical_bias="0.427" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

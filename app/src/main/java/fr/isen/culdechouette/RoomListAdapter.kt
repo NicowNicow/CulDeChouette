@@ -1,13 +1,13 @@
 package fr.isen.culdechouette
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
+
 
 class RoomListAdapter(private val ctxt: Context, private val layoutID: Int, private val roomList: List<Room>) : ArrayAdapter<Room>(ctxt, layoutID, roomList) {
 
@@ -21,7 +21,6 @@ class RoomListAdapter(private val ctxt: Context, private val layoutID: Int, priv
         roomName.text = room.room_name
         roomCapacity.text = ctxt.getString(R.string.capacityRoom, room.user_count, room.capacity)
         if (room.room_password_needed) {
-            Log.i("pouet",room.room_name)
             lockIcon.visibility = View.VISIBLE
         }
         else {

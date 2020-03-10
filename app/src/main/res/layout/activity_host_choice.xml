@@ -132,6 +132,8 @@
 
     <ListView
         android:id="@+id/roomListView"
+        android:choiceMode="singleChoice"
+        android:listSelector="@android:color/holo_red_light"
         android:layout_width="665dp"
         android:layout_height="185dp"
         android:alpha="0.4"

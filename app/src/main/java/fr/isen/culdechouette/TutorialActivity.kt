@@ -12,8 +12,6 @@ import java.util.*
 import kotlin.concurrent.schedule
 
 
-//Tutorial Activity
-
 class TutorialActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
