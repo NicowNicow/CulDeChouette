@@ -144,7 +144,7 @@ class WaitingRoomActivity : AppCompatActivity() {
         val doorSound = MediaPlayer.create(this, R.raw.door)
         doorSound.start()
         Timer("SoundTemporisation", false).schedule(500) {
-            val intentGame = Intent(this@WaitingRoomActivity, GameActivity::class.java)
+            val intentGame = Intent(this@WaitingRoomActivity, TestActivity::class.java)
             intentGame.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             this@WaitingRoomActivity.startActivity(intentGame)
         }

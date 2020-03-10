@@ -15,10 +15,12 @@
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustResize"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".TestActivity"></activity>
+
         <service
             android:name=".MatchmakingDisconnectedService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <activity
             android:name=".SettingsActivity"
