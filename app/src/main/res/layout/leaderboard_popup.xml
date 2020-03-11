@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linearLayout2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/popup_background"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/leaderboardTitlePopup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/grafik"
+        android:text="@string/resultsTitle"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.082" />
+
+    <ListView
+        android:id="@+id/leaderboardViewPopup"
+        android:layout_width="534dp"
+        android:layout_height="145dp"
+        android:layout_marginTop="8dp"
+        android:alpha="0.4"
+        android:background="#000"
+        app:layout_constraintEnd_toEndOf="@+id/leaderboardTitlePopup"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="@+id/leaderboardTitlePopup"
+        app:layout_constraintTop_toBottomOf="@+id/leaderboardTitlePopup"/>
+
+    <ImageButton
+        android:id="@+id/leaderboardBackButton"
+        android:layout_width="139dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="20dp"
+        android:background="?android:selectableItemBackground"
+        android:contentDescription="@string/buttonPlaceholder"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toStartOf="@+id/leaderboardTitlePopup"
+        app:layout_constraintTop_toBottomOf="@+id/leaderboardViewPopup"
+        app:srcCompat="@drawable/button_texture" />
+
+    <TextView
+        android:id="@+id/backText"
+        android:layout_width="103dp"
+        android:layout_height="44dp"
+        android:fontFamily="@font/faith"
+        android:text="@string/back"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/leaderboardBackButton"
+        app:layout_constraintEnd_toEndOf="@+id/leaderboardBackButton"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintStart_toStartOf="@+id/leaderboardBackButton"
+        app:layout_constraintTop_toTopOf="@+id/leaderboardBackButton"
+        app:layout_constraintVertical_bias="0.48" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

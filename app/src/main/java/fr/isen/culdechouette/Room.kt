@@ -7,7 +7,6 @@ class Room (
     var capacity: Int,
     var room_password_needed: Boolean,
     var game_started_boolean: Boolean,
-    var victory_boolean: Boolean,
     var room_password: String,
     var game_parameters: GameParameters) {
 
@@ -18,7 +17,6 @@ class Room (
         2,
         false,
         false,
-        false,
         "password",
         GameParameters())
 }
@@ -27,14 +25,12 @@ class User (
     var user_key: String,
     var username: String,
     var score: Int,
-    var ready_boolean: Boolean,
-    var grelotine: Boolean) {
+    var ready_boolean: Boolean) {
 
     constructor() : this(
         "empty_key",
         "empty_username",
         0,
-        false,
         false)
 }
 

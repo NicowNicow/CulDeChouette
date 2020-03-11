@@ -107,7 +107,7 @@ class WaitingRoomActivity : AppCompatActivity() {
 
     private fun doAllReady() {
         val keyRoom = matchmakingSettings?.getString("roomKey", null)?:""
-        firebaseRef.child(keyRoom).addListenerForSingleValueEvent(object: ValueEventListener {
+        firebaseRef.child(keyRoom).addValueEventListener(object: ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
                 Log.i("DatabaseError", error.toString())
             }

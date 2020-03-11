@@ -1,25 +1,33 @@
 package fr.isen.culdechouette
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.hardware.SensorManager
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
+import android.os.Looper
 import android.util.DisplayMetrics
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.view.View.SYSTEM_UI_FLAG_IMMERSIVE
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.ImageButton
+import android.widget.ListView
 import android.widget.Toast
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_game.*
-import java.lang.NumberFormatException
 import kotlinx.android.synthetic.main.activity_scoreboard.*
+import java.lang.NumberFormatException
 
 
 class GameActivity : AppCompatActivity(), ShakeDetector.Listener   {
@@ -32,10 +40,11 @@ class GameActivity : AppCompatActivity(), ShakeDetector.Listener   {
     private var playerCount = 0
     private var sirop = 0
     private var animationDone = false
+    private var toastPrinted = false
     private lateinit var usersList: MutableList<User>
-    private lateinit var usersListCopy: MutableList<User>
+    private lateinit var previousUsersList: MutableList<User>
     private lateinit var gameParameters: GameParameters
-    private lateinit var gameParametersCopy: GameParameters
+    private lateinit var previousGameParameters: GameParameters
     private lateinit var matchmakingAnnulation: MatchmakingAnnulation
     private lateinit var  firebaseRef: DatabaseReference
     private var matchmakingSettings : SharedPreferences? = null
@@ -52,6 +61,13 @@ class GameActivity : AppCompatActivity(), ShakeDetector.Listener   {
         setUpListeners()
         startService(Intent(this@GameActivity, MatchmakingDisconnectedService::class.java))
         fetchFirebaseForGame()
+        val mainHandler = Handler(Looper.getMainLooper())
+        mainHandler.post(object : Runnable {
+            override fun run() {
+                mainGameAlgorithm()
+                mainHandler.postDelayed(this, 2000)
+            }
+        })
     }
 
     override fun onResume () {
@@ -126,11 +142,12 @@ class GameActivity : AppCompatActivity(), ShakeDetector.Listener   {
             tabletop.isClickable = false
             shakeDetector.stop()
             val diceValuesTempo = DiceValues(valuedice1, valuedice2, valueCDC)
-            val gameParametersTempo = GameParameters(gameParametersCopy.user_turn, false, diceValuesTempo, true)
+            val gameParametersTempo = GameParameters(previousGameParameters.user_turn, false, diceValuesTempo, true)
             firebaseRef.child("game_parameters").setValue(gameParametersTempo)
         }
         quitButton.setOnClickListener { matchmakingAnnulation.windowStopMatchmakingInGame() }
         rulesButton.setOnClickListener { doRules() }
+        leaderboardsButton.setOnClickListener { doLeaderboardPopup() }
     }
 
     private fun doRules() {
@@ -151,10 +168,8 @@ class GameActivity : AppCompatActivity(), ShakeDetector.Listener   {
                     gameParameters = snapshot.child("game_parameters").getValue(GameParameters::class.java)!!
                     usersList.clear()
                     fetchUserValues(snapshot.child("users"))
-                    //val adapter = LobbyListAdapter(applicationContext, R.layout.lobby_users_list, usersList )
-                    //lobbyList.adapter = adapter
-                    gameParametersCopy = gameParameters
-                    usersListCopy = usersList
+                    previousGameParameters = gameParameters
+                    previousUsersList = usersList
                 }
             }
         })
@@ -184,18 +199,12 @@ class GameActivity : AppCompatActivity(), ShakeDetector.Listener   {
         culDeChouette.isClickable = false
     }
 
-    private fun diceClickable() {
-        dice1.isClickable = true
-        dice2.isClickable = true
-        culDeChouette.isClickable = true
-    }
-
     override fun hearShake() {
         animation()
         tabletop.isClickable = false
         shakeDetector.stop()
         val diceValuesTempo = DiceValues(valuedice1, valuedice2, valueCDC)
-        val gameParametersTempo = GameParameters(gameParametersCopy.user_turn, false, diceValuesTempo, true)
+        val gameParametersTempo = GameParameters(previousGameParameters.user_turn, false, diceValuesTempo, true)
         firebaseRef.child("game_parameters").setValue(gameParametersTempo)
     }
 
@@ -359,26 +368,6 @@ class GameActivity : AppCompatActivity(), ShakeDetector.Listener   {
                     usersList.clear()
                     fetchUserValues(snapshot.child("users"))
                     gameParameters = snapshot.child("game_parameters").getValue(GameParameters::class.java)!!
-                    //val adapter = LobbyListAdapter(applicationContext, R.layout.lobby_users_list, usersList )
-                    //lobbyList.adapter = adapter
-                    tabletop.isClickable = false
-                    shakeDetector.stop()
-                    if ((matchmakingSettings?.getString("userKey", null)?:"" == gameParametersCopy.user_turn)
-                        && (!snapshot.child("game_parameters").child("dice_value_changed").toString().toBoolean())) {
-                        Log.i("Jeu", "Test4")
-                        Toast.makeText(this@GameActivity, getString(R.string.yourTurn), Toast.LENGTH_LONG).show()
-                        tabletop.isClickable = true
-                        setUpShakeDetector()
-
-                    }
-                    else if ((matchmakingSettings?.getString("userKey", null)?:"" != gameParametersCopy.user_turn)
-                        && (!animationDone) && (snapshot.child("game_parameters").child("dice_value_changed").toString().toBoolean())) {
-                        Log.i("Jeu", "Test6")
-                        Toast.makeText(this@GameActivity, getString(R.string.turn, snapshot.child("users").child(snapshot.child("game_parameters").child("user_turn").toString()).child("username").toString()), Toast.LENGTH_LONG).show()
-                        animationFromDatabase()
-                        Log.i("Jeu", "Test7")
-                    }
-                    //Verification de Victoire ici
                 }
             }
         })
@@ -394,4 +383,65 @@ class GameActivity : AppCompatActivity(), ShakeDetector.Listener   {
         this@GameActivity.startActivity(intentMain)
     }
 
+    private fun mainGameAlgorithm() {
+        tabletop.isClickable = false
+        shakeDetector.stop()
+        if (matchmakingSettings?.getString("userKey", null)?:"" == previousGameParameters.user_turn) {
+            if (!gameParameters.dice_value_changed) {
+                if (!toastPrinted) {
+                    Toast.makeText(this@GameActivity, getString(R.string.yourTurn), Toast.LENGTH_LONG).show()
+                    toastPrinted = true
+                }
+                tabletop.isClickable = true
+                setUpShakeDetector()
+            }
+            if (gameParameters.timer_launched) { //&& timer = 10 secondes {
+                //StopTimer
+                //Calcul score des joueurs
+                //Changement de tour [Reinitialisation des parametres, locaux et Firebase
+            }
+            else {
+                //CheckFigures
+                //Lance Timer
+                //Débloque les listeners de passage de tour, pas mou le caillou et grelotte ca picotte
+                //Débloque sous condition le sirotage
+            }
+        }
+        else if (matchmakingSettings?.getString("userKey", null)?:"" != gameParameters.user_turn) {
+            if ((!animationDone) && (gameParameters.dice_value_changed)) {
+                if (!toastPrinted) {
+                    val indexPlayer = usersList.binarySearchBy(previousGameParameters.user_turn) { it.user_key }
+                    Toast.makeText(this@GameActivity, getString(R.string.turn, usersList[indexPlayer].username), Toast.LENGTH_LONG).show()
+                }
+                animationFromDatabase()
+            }
+            if (gameParameters.timer_launched) {
+                //Débloque les listeners de pas mou le caillou et grelotte ca picotte
+            }
+            //else: reinitialisation des parametres locaux
+        }
+        //Condition de victoire à vérifier
+    }
+
+    private fun doLeaderboardPopup() {
+        val leaderboardDialogBuilder: AlertDialog.Builder? = this@GameActivity.let { AlertDialog.Builder(it) }
+        val displayParam: DisplayMetrics? = DisplayMetrics()
+        val layoutParams: WindowManager.LayoutParams? = WindowManager.LayoutParams()
+        windowManager.defaultDisplay.getMetrics(displayParam)
+        layoutParams?.width = (displayParam?.widthPixels?.times(0.9f))?.toInt()!!
+        layoutParams?.height = (displayParam.heightPixels.times(0.9f)).toInt()
+        leaderboardDialogBuilder?.setView(layoutInflater.inflate(R.layout.leaderboard_popup, null))?.create()
+        val leaderboardDialog = leaderboardDialogBuilder?.show()
+        leaderboardDialog?.window?.attributes = layoutParams
+        leaderboardDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        leaderboardDialog?.window?.setGravity(Gravity.CENTER)
+        leaderboardDialog?.findViewById<ImageButton>(R.id.leaderboardBackButton)?.setOnClickListener{ leaderboardDialog.dismiss()}
+        var listview = leaderboardDialog?.findViewById<ListView>(R.id.leaderboardViewPopup)
+        val adapter = ResultsAdapter(applicationContext, R.layout.scoreboard_element, usersList )
+        listview?.adapter = adapter
+    }
+
 }
+
+//Ajouter dans la firebase:
+

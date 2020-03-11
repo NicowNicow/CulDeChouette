@@ -30,8 +30,6 @@
         android:layout_marginTop="20dp"
         android:alpha="0.4"
         android:background="#000"
-        android:choiceMode="singleChoice"
-        android:listSelector="@android:color/holo_red_light"
         app:layout_constraintEnd_toEndOf="@+id/leaderboardTitleText"
         app:layout_constraintStart_toStartOf="@+id/leaderboardTitleText"
         app:layout_constraintTop_toBottomOf="@+id/leaderboardTitleText">

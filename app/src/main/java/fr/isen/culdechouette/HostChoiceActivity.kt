@@ -33,7 +33,7 @@ class HostChoiceActivity : AppCompatActivity() {
     private var matchmakingSettings : SharedPreferences? = null
     private var selectedRoom: Int? = null
     lateinit var roomList: MutableList<Room>
-    lateinit var firebaseRef: DatabaseReference
+    private lateinit var firebaseRef: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -126,7 +126,7 @@ class HostChoiceActivity : AppCompatActivity() {
     private fun addUser() {
         val keyFetched = matchmakingSettings?.getString("roomKey", null)?:""
         val keyInitialUser = firebaseRef.child(keyFetched).child("users").push().key!!
-        val initialUser = User(keyInitialUser,usernamePref?.getString("usernameKey", null)?:"", 0, false, false)
+        val initialUser = User(keyInitialUser,usernamePref?.getString("usernameKey", null)?:"", 0, false)
         firebaseRef.child(keyFetched).child("users").child(keyInitialUser).setValue(initialUser)
         matchmakingSettings?.edit()?.putString("userKey", keyInitialUser)?.apply()
     }

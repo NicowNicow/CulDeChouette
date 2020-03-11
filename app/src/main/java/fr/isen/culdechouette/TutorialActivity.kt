@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.View
 import android.view.WindowManager
+import android.widget.ArrayAdapter
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_tutorial.*
@@ -31,6 +32,7 @@ class TutorialActivity : AppCompatActivity() {
         setUpFirebaseSharedPref()
         setUpMatchmakingCancellation()
         startService(Intent(this@TutorialActivity, MatchmakingDisconnectedService::class.java))
+        listRules.adapter = RulesAdapter(this@TutorialActivity, R.layout.rules_element, resources.getStringArray(R.array.Rules))
     }
 
     private fun setUpFirebaseSharedPref() {

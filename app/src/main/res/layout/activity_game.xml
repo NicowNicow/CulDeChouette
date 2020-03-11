@@ -90,118 +90,129 @@
             app:srcCompat="@android:drawable/ic_delete" />
 
         <ImageButton
-            android:id="@+id/grelotteButton"
-            android:layout_width="152dp"
-            android:layout_height="73dp"
-            android:background="?android:selectableItemBackground"
-            android:contentDescription="@string/buttonPlaceholder"
-            android:scaleType="fitXY"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.488"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/quitButton"
-            app:layout_constraintVertical_bias="0.029"
-            app:srcCompat="@drawable/button_texture" />
-
-        <TextView
-            android:id="@+id/grelotteText"
-            android:layout_width="122dp"
-            android:layout_height="54dp"
-            android:fontFamily="@font/faith"
-            android:text="@string/grelottePicotte"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/grelotteButton"
-            app:layout_constraintEnd_toEndOf="@+id/grelotteButton"
-            app:layout_constraintHorizontal_bias="0.45"
-            app:layout_constraintStart_toStartOf="@+id/grelotteButton"
-            app:layout_constraintTop_toTopOf="@+id/grelotteButton"
-            app:layout_constraintVertical_bias="0.48" />
-
-        <ImageButton
-            android:id="@+id/mouCaillouButton"
-            android:layout_width="151dp"
-            android:layout_height="75dp"
-            android:background="?android:selectableItemBackground"
-            android:contentDescription="@string/buttonPlaceholder"
-            android:scaleType="fitXY"
-            app:layout_constraintEnd_toEndOf="@+id/grelotteButton"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/grelotteButton"
-            app:layout_constraintTop_toBottomOf="@+id/grelotteButton"
-            app:srcCompat="@drawable/button_texture" />
-
-        <TextView
-            android:id="@+id/mouCaillouText"
-            android:layout_width="120dp"
-            android:layout_height="55dp"
-            android:fontFamily="@font/faith"
-            android:text="@string/mouCaillou"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/mouCaillouButton"
-            app:layout_constraintEnd_toEndOf="@+id/mouCaillouButton"
-            app:layout_constraintHorizontal_bias="0.45"
-            app:layout_constraintStart_toStartOf="@+id/mouCaillouButton"
-            app:layout_constraintTop_toTopOf="@+id/mouCaillouButton"
-            app:layout_constraintVertical_bias="0.48" />
-
-        <ImageButton
-            android:id="@+id/siropButton"
-            android:layout_width="151dp"
-            android:layout_height="75dp"
-            android:layout_marginTop="8dp"
-            android:background="?android:selectableItemBackground"
-            android:contentDescription="@string/buttonPlaceholder"
-            android:scaleType="fitXY"
-            app:layout_constraintEnd_toEndOf="@+id/mouCaillouButton"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/mouCaillouButton"
-            app:layout_constraintTop_toBottomOf="@+id/mouCaillouButton"
-            app:srcCompat="@drawable/button_texture" />
-
-        <TextView
-            android:id="@+id/siropText"
-            android:layout_width="120dp"
-            android:layout_height="55dp"
-            android:fontFamily="@font/faith"
-            android:text="@string/mouCaillou"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/siropButton"
-            app:layout_constraintEnd_toEndOf="@+id/siropButton"
-            app:layout_constraintHorizontal_bias="0.45"
-            app:layout_constraintStart_toStartOf="@+id/siropButton"
-            app:layout_constraintTop_toTopOf="@+id/siropButton"
-            app:layout_constraintVertical_bias="0.48" />
-
-        <ImageButton
-            android:id="@+id/grelottineButton"
-            android:layout_width="151dp"
-            android:layout_height="75dp"
-            android:background="?android:selectableItemBackground"
-            android:contentDescription="@string/buttonPlaceholder"
-            android:scaleType="fitXY"
-            app:layout_constraintEnd_toEndOf="@+id/siropButton"
-            app:layout_constraintTop_toBottomOf="@+id/siropButton"
-            app:srcCompat="@drawable/button_texture" />
-
-        <TextView
-            android:id="@+id/grelottineText"
-            android:layout_width="124dp"
-            android:layout_height="44dp"
-            android:fontFamily="@font/faith"
-            android:text="@string/grelottine"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/grelottineButton"
-            app:layout_constraintEnd_toEndOf="@+id/grelottineButton"
-            app:layout_constraintHorizontal_bias="0.45"
-            app:layout_constraintStart_toStartOf="@+id/grelottineButton"
-            app:layout_constraintTop_toTopOf="@+id/grelottineButton"
-            app:layout_constraintVertical_bias="0.48" />
+            android:id="@+id/leaderboardsButton"
+            android:layout_width="42dp"
+            android:layout_height="38dp"
+            android:contentDescription="@string/imagePlaceholder"
+            app:layout_constraintBottom_toBottomOf="@+id/quitButton"
+            app:layout_constraintEnd_toStartOf="@+id/quitButton"
+            app:layout_constraintStart_toEndOf="@+id/rulesButton"
+            app:layout_constraintTop_toTopOf="@+id/quitButton"
+            app:srcCompat="@android:drawable/ic_menu_compass" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageButton
+        android:id="@+id/grelotteButton"
+        android:layout_width="152dp"
+        android:layout_height="73dp"
+        android:background="?android:selectableItemBackground"
+        android:contentDescription="@string/buttonPlaceholder"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/actionBar"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toEndOf="@+id/tabletop"
+        app:layout_constraintTop_toTopOf="@+id/actionBar"
+        app:layout_constraintVertical_bias="0.25"
+        app:srcCompat="@drawable/button_texture" />
+
+    <TextView
+        android:id="@+id/grelotteText"
+        android:layout_width="122dp"
+        android:layout_height="54dp"
+        android:fontFamily="@font/faith"
+        android:text="@string/grelottePicotte"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/grelotteButton"
+        app:layout_constraintEnd_toEndOf="@+id/grelotteButton"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintStart_toStartOf="@+id/grelotteButton"
+        app:layout_constraintTop_toTopOf="@+id/grelotteButton"
+        app:layout_constraintVertical_bias="0.48" />
+
+    <ImageButton
+        android:id="@+id/mouCaillouButton"
+        android:layout_width="151dp"
+        android:layout_height="75dp"
+        android:background="?android:selectableItemBackground"
+        android:contentDescription="@string/buttonPlaceholder"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="@+id/grelotteButton"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/grelotteButton"
+        app:layout_constraintTop_toBottomOf="@+id/grelotteButton"
+        app:srcCompat="@drawable/button_texture" />
+
+    <TextView
+        android:id="@+id/mouCaillouText"
+        android:layout_width="120dp"
+        android:layout_height="55dp"
+        android:fontFamily="@font/faith"
+        android:text="@string/mouCaillou"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/mouCaillouButton"
+        app:layout_constraintEnd_toEndOf="@+id/mouCaillouButton"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintStart_toStartOf="@+id/mouCaillouButton"
+        app:layout_constraintTop_toTopOf="@+id/mouCaillouButton"
+        app:layout_constraintVertical_bias="0.48" />
+
+    <ImageButton
+        android:id="@+id/siropButton"
+        android:layout_width="151dp"
+        android:layout_height="75dp"
+        android:background="?android:selectableItemBackground"
+        android:contentDescription="@string/buttonPlaceholder"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="@+id/mouCaillouButton"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/mouCaillouButton"
+        app:layout_constraintTop_toBottomOf="@+id/mouCaillouButton"
+        app:srcCompat="@drawable/button_texture" />
+
+    <TextView
+        android:id="@+id/siropText"
+        android:layout_width="110dp"
+        android:layout_height="36dp"
+        android:fontFamily="@font/faith"
+        android:text="@string/sirop"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/siropButton"
+        app:layout_constraintEnd_toEndOf="@+id/siropButton"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintStart_toStartOf="@+id/siropButton"
+        app:layout_constraintTop_toTopOf="@+id/siropButton"
+        app:layout_constraintVertical_bias="0.48" />
+
+    <ImageButton
+        android:id="@+id/nextButton"
+        android:layout_width="151dp"
+        android:layout_height="75dp"
+        android:background="?android:selectableItemBackground"
+        android:contentDescription="@string/buttonPlaceholder"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="@+id/siropButton"
+        app:layout_constraintStart_toStartOf="@+id/siropButton"
+        app:layout_constraintTop_toBottomOf="@+id/siropButton"
+        app:srcCompat="@drawable/button_texture" />
+
+    <TextView
+        android:id="@+id/nextText"
+        android:layout_width="120dp"
+        android:layout_height="46dp"
+        android:fontFamily="@font/faith"
+        android:text="@string/next"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/nextButton"
+        app:layout_constraintEnd_toEndOf="@+id/nextButton"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintStart_toStartOf="@+id/nextButton"
+        app:layout_constraintTop_toTopOf="@+id/nextButton"
+        app:layout_constraintVertical_bias="0.48" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

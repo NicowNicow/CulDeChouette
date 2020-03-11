@@ -33,7 +33,7 @@ class ResultsAdapter(private val ctxt: Context, private val layoutID: Int, priva
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val layoutInflater : LayoutInflater = LayoutInflater.from(ctxt)
-        val view : View = layoutInflater.inflate(layoutID, parent, false)
+        val view : View = layoutInflater.inflate(layoutID, null)
         val user = userList[position]
         val usernameValue = view.findViewById<TextView>(R.id.username)
         val rankValue = view.findViewById<TextView>(R.id.rank)
@@ -43,3 +43,13 @@ class ResultsAdapter(private val ctxt: Context, private val layoutID: Int, priva
     }
 }
 
+class RulesAdapter(private val ctxt: Context, private val layoutID: Int, private val arrayRules: Array<out String>) : ArrayAdapter<String>(ctxt, layoutID, arrayRules) {
+
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        val layoutInflater : LayoutInflater = LayoutInflater.from(ctxt)
+        val view : View = layoutInflater.inflate(layoutID, null)
+        val rulesValue = view.findViewById<TextView>(R.id.rulesValue)
+        rulesValue.text = arrayRules[position]
+        return view
+    }
+}
