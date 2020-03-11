@@ -88,7 +88,7 @@ class CreationRoomActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
 
     private fun modifyGameRoomParameters() {
         val keyInitialUser = firebaseRef.child(firebaseRoomKey).child("users").push().key!!
-        val initialUser = User(keyInitialUser,usernamePref?.getString("usernameKey", null)?:"", 0, false)
+        val initialUser = User(keyInitialUser,usernamePref?.getString("usernameKey", null)?:"", 0, false, 0, 0)
         roomCreation.room_key = firebaseRoomKey
         roomCreation.game_started_boolean = false
         roomCreation.game_parameters = GameParameters()

@@ -63,6 +63,7 @@
     <string name="sirop">Sirotage</string>
     <string name="fail">Bevue!</string>
     <string name="next">Finir le tour</string>
+    <string name="victory">Victoire de %1$s!</string>
 
     //ScoreboardActivity
     <string name="resultsTitle">Resultats</string>
@@ -70,9 +71,9 @@
     //RulesListView
     <string-array name="Rules">
         <item name="namingRule">Il s\'agit d\'un jeu de des en tour par tour</item>
-        <item name="victoryRule">Le vainqueur est le premier joueur a obtenir ou depasser 343 points</item>
+        <item name="victoryRule">Le vainqueur est le premier joueur a obtenir ou depasser 342 points</item>
         <item name="rollDiceRule">Le joueur secoue le telephone ou touche l\'ecran pour lancer les des</item>
-        <item name="chouetteRule">Le joueur realise un chouette si deux des trois des lances sont identiques</item>
+        <item name="chouetteRule">Le joueur realise une chouette si deux des trois des lances sont identiques</item>
         <item name="chouettePointsRule">Realiser une chouette rapporte: 1->1pt 2->4pts 3->9pts 4->16pts 5->25pts 6->36pts</item>
         <item name="culDeChouetteRule">Le joueur realise un cul de chouette si les trois des lances sont identiques</item>
         <item name="culDeChouettePointsRule">Realiser un cul de chouette rapport: 1->50pts 2->60pts 3->70pts 4->80pts 5->90pts 6->100pts</item>
@@ -81,13 +82,14 @@
         <item name="veluteRule">Le joueur realise une velute lorsque la somme de deux des est egale a la valeur du troisieme</item>
         <item name="velutePointRule">Realiser une velute rapporte: 2->8pts 3->18pts 4->32pts 5->50pts 6->72pts</item>
         <item name="chouetteVeluteRule">Le joueur realise une chouette velute lorsque la somme de deux des identiques est egales a la valeur du troisieme.
-        Realiser une chouette velute rapporte le mem nombre de points qu\'une velute.</item>
+        Realiser une chouette velute rapporte le meme nombre de points qu\'une velute.</item>
         <item name="pasMouLeCaillouRule">Lorsqu\'un joueur realise une chouette velute, le joueur qui aura le plus appuye sur le bouton "Pas mou le caillou!"
         gagne les points de la chouette velute</item>
         <item name="suiteRule">Le joueur realise une suite si le resultat des trois des se suivent</item>
         <item name="grelotteCaPicotteRule">Lorsqu\'un joueur realise une suite, tout les joueurs doivent appuyer de facon repetee sur le bouton "grellotte ca picotte!"
         Le joueur le faisant le moins de fois perd 10pts</item>
         <item name="neantRule">Si le joueur ne realise aucune de ces figures, il ne gagne pas de point: c\'est un neant. </item>
+        <item name= "bevueRule">Si le joueur appuie sur un bouton par erreur, c\'est une bevue. Le joueur perd alors 5 points par appui</item>
     </string-array>
 
 </resources>

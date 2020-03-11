@@ -11,9 +11,8 @@ import android.media.MediaPlayer
 import android.util.Log
 import android.view.*
 import java.lang.IllegalStateException
+import android.view.animation.AnimationUtils
 
-
-//Creation of the main menu, nothing really interesting here
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,6 +33,8 @@ class MainActivity : AppCompatActivity() {
         }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        logo.animation = AnimationUtils.loadAnimation(this,R.anim.top_animation)
+        touchText.animation = AnimationUtils.loadAnimation(this,R.anim.bottom_animation)
         mainID.setOnClickListener{ doLogin() }
     }
 

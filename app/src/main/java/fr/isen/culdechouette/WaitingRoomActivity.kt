@@ -126,8 +126,14 @@ class WaitingRoomActivity : AppCompatActivity() {
                 userReadyCount++
             }
         }
-        if ((userReadyCount == snapshot.child("user_count").value.toString().toInt())&&(userReadyCount !=0)&&(userReadyCount !=1)) {
-            firebaseRef.child(matchmakingSettings?.getString("roomKey", null)?:"").child("game_started_boolean").setValue(true)
+        try {
+            if ((userReadyCount == snapshot.child("user_count").value.toString().toInt()) && (userReadyCount != 0) && (userReadyCount != 1)) {
+                firebaseRef.child(matchmakingSettings?.getString("roomKey", null) ?: "")
+                    .child("game_started_boolean").setValue(true)
+            }
+        }
+        catch (error: NumberFormatException){
+            Log.i("NumberFormatException", error.toString())
         }
     }
 

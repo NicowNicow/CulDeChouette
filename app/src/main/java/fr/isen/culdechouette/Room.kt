@@ -25,27 +25,45 @@ class User (
     var user_key: String,
     var username: String,
     var score: Int,
-    var ready_boolean: Boolean) {
+    var ready_boolean: Boolean,
+    var sum_pasmou: Int,
+    var sum_grelotte: Int) {
 
     constructor() : this(
         "empty_key",
         "empty_username",
         0,
-        false)
+        false,
+        0,
+        0)
 }
 
 
 class GameParameters (
     var user_turn: String,
-    var timer_launched : Boolean,
+    var timer_launched : Int,
     var dice_values: DiceValues,
-    var dice_value_changed: Boolean) {
+    var dice_value_changed: Boolean,
+    var dice_figure: DiceFigure) {
 
     constructor(): this(
         "empty_user_turn",
-        false,
+        0,
         DiceValues(),
-        false)
+        false,
+        DiceFigure())
+}
+
+class DiceFigure(
+    var figure: String,
+    var valueFigure: Int,
+    var sirop_dice: Int) {
+
+    constructor(): this(
+        "neant",
+        0,
+        0)
+
 }
 
 class DiceValues (

@@ -26,8 +26,10 @@ import android.widget.ListView
 import android.widget.Toast
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_game.*
-import kotlinx.android.synthetic.main.activity_scoreboard.*
 import java.lang.NumberFormatException
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.concurrent.schedule
 
 
 class GameActivity : AppCompatActivity(), ShakeDetector.Listener   {
@@ -41,14 +43,15 @@ class GameActivity : AppCompatActivity(), ShakeDetector.Listener   {
     private var sirop = 0
     private var animationDone = false
     private var toastPrinted = false
+    private var nextTurn = false
     private lateinit var usersList: MutableList<User>
-    private lateinit var previousUsersList: MutableList<User>
     private lateinit var gameParameters: GameParameters
-    private lateinit var previousGameParameters: GameParameters
     private lateinit var matchmakingAnnulation: MatchmakingAnnulation
     private lateinit var  firebaseRef: DatabaseReference
     private var matchmakingSettings : SharedPreferences? = null
     private lateinit var shakeDetector: ShakeDetector
+    private lateinit var timer: CountDownTimer
+    private lateinit var mainHandler: Handler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,11 +64,18 @@ class GameActivity : AppCompatActivity(), ShakeDetector.Listener   {
         setUpListeners()
         startService(Intent(this@GameActivity, MatchmakingDisconnectedService::class.java))
         fetchFirebaseForGame()
-        val mainHandler = Handler(Looper.getMainLooper())
+        timer = object: CountDownTimer(10000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {}
+            override fun onFinish() {
+                firebaseRef.child("game_parameters").child("timer_launched").setValue(2)
+            }
+        }
+        mainHandler = Handler(Looper.getMainLooper())
         mainHandler.post(object : Runnable {
             override fun run() {
                 mainGameAlgorithm()
-                mainHandler.postDelayed(this, 2000)
+                checkVictory(this)
+                mainHandler.postDelayed(this, 3000)
             }
         })
     }
@@ -121,33 +131,52 @@ class GameActivity : AppCompatActivity(), ShakeDetector.Listener   {
     }
 
     private fun setUpListeners() {
-        dice1.setOnClickListener{
-            diceNotClickables()
-            sirop = 1
-            animation()
-        }
-        dice2.setOnClickListener{
-            diceNotClickables()
-            sirop = 2
-            animation()
-        }
-        culDeChouette.setOnClickListener {
-            diceNotClickables()
-            sirop = 3
-            animation()
-        }
-        diceNotClickables()
         tabletop.setOnClickListener {
             animation()
             tabletop.isClickable = false
             shakeDetector.stop()
             val diceValuesTempo = DiceValues(valuedice1, valuedice2, valueCDC)
-            val gameParametersTempo = GameParameters(previousGameParameters.user_turn, false, diceValuesTempo, true)
+            val gameParametersTempo = GameParameters(gameParameters.user_turn, 0, diceValuesTempo, true, DiceFigure())
             firebaseRef.child("game_parameters").setValue(gameParametersTempo)
         }
         quitButton.setOnClickListener { matchmakingAnnulation.windowStopMatchmakingInGame() }
         rulesButton.setOnClickListener { doRules() }
         leaderboardsButton.setOnClickListener { doLeaderboardPopup() }
+        setActionBarButtonListerners()
+    }
+
+    private fun setActionBarButtonListerners() {
+        grelotteButton.setOnClickListener { doGrelotte() }
+        mouCaillouButton.setOnClickListener { doPasMou() }
+        siropButton.setOnClickListener { doSirop() }
+        nextButton.setOnClickListener { nextTurn = true }
+        lockActionBarButtons()
+    }
+
+    private fun lockActionBarButtons() {
+        grelotteButton.isClickable = false
+        grelotteButton.setColorFilter(Color.GRAY)
+        mouCaillouButton.isClickable = false
+        mouCaillouButton.setColorFilter(Color.GRAY)
+        siropButton.isClickable = false
+        siropButton.setColorFilter(Color.GRAY)
+        nextButton.isClickable = false
+        nextButton.setColorFilter(Color.GRAY)
+    }
+
+    private fun unlockActionBarButtons() {
+        grelotteButton.isClickable = true
+        grelotteButton.setColorFilter(Color.TRANSPARENT)
+        mouCaillouButton.isClickable = true
+        mouCaillouButton.setColorFilter(Color.TRANSPARENT)
+        if (matchmakingSettings?.getString("userKey", null)?:"" == gameParameters.user_turn) {
+            nextButton.isClickable = true
+            nextButton.setColorFilter(Color.TRANSPARENT)
+        }
+        if (gameParameters.dice_figure.figure == "chouette") {
+            siropButton.isClickable = true
+            siropButton.setColorFilter(Color.TRANSPARENT)
+        }
     }
 
     private fun doRules() {
@@ -168,8 +197,6 @@ class GameActivity : AppCompatActivity(), ShakeDetector.Listener   {
                     gameParameters = snapshot.child("game_parameters").getValue(GameParameters::class.java)!!
                     usersList.clear()
                     fetchUserValues(snapshot.child("users"))
-                    previousGameParameters = gameParameters
-                    previousUsersList = usersList
                 }
             }
         })
@@ -193,18 +220,12 @@ class GameActivity : AppCompatActivity(), ShakeDetector.Listener   {
         }
     }
 
-    private fun diceNotClickables() {
-        dice1.isClickable = false
-        dice2.isClickable = false
-        culDeChouette.isClickable = false
-    }
-
     override fun hearShake() {
         animation()
         tabletop.isClickable = false
         shakeDetector.stop()
         val diceValuesTempo = DiceValues(valuedice1, valuedice2, valueCDC)
-        val gameParametersTempo = GameParameters(previousGameParameters.user_turn, false, diceValuesTempo, true)
+        val gameParametersTempo = GameParameters(gameParameters.user_turn, 0, diceValuesTempo, true, DiceFigure())
         firebaseRef.child("game_parameters").setValue(gameParametersTempo)
     }
 
@@ -386,7 +407,7 @@ class GameActivity : AppCompatActivity(), ShakeDetector.Listener   {
     private fun mainGameAlgorithm() {
         tabletop.isClickable = false
         shakeDetector.stop()
-        if (matchmakingSettings?.getString("userKey", null)?:"" == previousGameParameters.user_turn) {
+        if (matchmakingSettings?.getString("userKey", null)?:"" == gameParameters.user_turn) {
             if (!gameParameters.dice_value_changed) {
                 if (!toastPrinted) {
                     Toast.makeText(this@GameActivity, getString(R.string.yourTurn), Toast.LENGTH_LONG).show()
@@ -395,32 +416,43 @@ class GameActivity : AppCompatActivity(), ShakeDetector.Listener   {
                 tabletop.isClickable = true
                 setUpShakeDetector()
             }
-            if (gameParameters.timer_launched) { //&& timer = 10 secondes {
-                //StopTimer
-                //Calcul score des joueurs
-                //Changement de tour [Reinitialisation des parametres, locaux et Firebase
+            else if ((gameParameters.timer_launched == 2) || (nextTurn)) {
+                lockActionBarButtons()
+                doCalculatePoints()
+                sirop = 0
+                animationDone = false
+                toastPrinted = false
+                nextTurn = false
+                doChangeTurn()
+                doCleanFirebase()
             }
             else {
-                //CheckFigures
-                //Lance Timer
-                //Débloque les listeners de passage de tour, pas mou le caillou et grelotte ca picotte
-                //Débloque sous condition le sirotage
+                checkFigure()
+                firebaseRef.child("game_parameters").child("timer_launched").setValue(1)
+                if (gameParameters.timer_launched == 0) {
+                    timer.start()
+                }
+                unlockActionBarButtons()
             }
         }
         else if (matchmakingSettings?.getString("userKey", null)?:"" != gameParameters.user_turn) {
             if ((!animationDone) && (gameParameters.dice_value_changed)) {
                 if (!toastPrinted) {
-                    val indexPlayer = usersList.binarySearchBy(previousGameParameters.user_turn) { it.user_key }
+                    val indexPlayer = usersList.binarySearchBy(gameParameters.user_turn) { it.user_key }
                     Toast.makeText(this@GameActivity, getString(R.string.turn, usersList[indexPlayer].username), Toast.LENGTH_LONG).show()
                 }
                 animationFromDatabase()
             }
-            if (gameParameters.timer_launched) {
-                //Débloque les listeners de pas mou le caillou et grelotte ca picotte
+            if (gameParameters.timer_launched == 1) {
+                unlockActionBarButtons()
             }
-            //else: reinitialisation des parametres locaux
+            else {
+                lockActionBarButtons()
+                sirop = 0
+                animationDone = false
+                toastPrinted = false
+            }
         }
-        //Condition de victoire à vérifier
     }
 
     private fun doLeaderboardPopup() {
@@ -435,13 +467,186 @@ class GameActivity : AppCompatActivity(), ShakeDetector.Listener   {
         leaderboardDialog?.window?.attributes = layoutParams
         leaderboardDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         leaderboardDialog?.window?.setGravity(Gravity.CENTER)
-        leaderboardDialog?.findViewById<ImageButton>(R.id.leaderboardBackButton)?.setOnClickListener{ leaderboardDialog.dismiss()}
-        var listview = leaderboardDialog?.findViewById<ListView>(R.id.leaderboardViewPopup)
+        leaderboardDialog?.findViewById<ImageButton>(R.id.leaderboardBackButton)?.setOnClickListener{
+            val scrollSound = MediaPlayer.create(this, R.raw.elder_scroll)
+            scrollSound.start()
+            leaderboardDialog.dismiss()
+        }
+        val listview = leaderboardDialog?.findViewById<ListView>(R.id.leaderboardViewPopup)
         val adapter = ResultsAdapter(applicationContext, R.layout.scoreboard_element, usersList )
         listview?.adapter = adapter
     }
 
+    private fun checkVictory(runnable: Runnable) {
+        val listVictoryIndex: MutableList<Int> = mutableListOf()
+        for (index in (0 until usersList.size)) {
+            if (usersList[index].score >= 342) {
+                listVictoryIndex.add(index)
+            }
+        }
+        if (listVictoryIndex.size == 0) {
+            return
+        }
+        if (listVictoryIndex.size ==1) {
+            Toast.makeText(this@GameActivity, getString(R.string.victory, usersList[listVictoryIndex[0]].username), Toast.LENGTH_LONG).show()
+            goToLeaderboard()
+        }
+        else {
+            var maxValue = 0
+            var indexTemp = -1
+            for (index in (0 until listVictoryIndex.size)) {
+                if (usersList[listVictoryIndex[index]].score >= maxValue) {
+                    maxValue = usersList[listVictoryIndex[index]].score
+                    indexTemp = listVictoryIndex[index]
+                }
+            }
+            Toast.makeText(this@GameActivity, getString(R.string.victory, usersList[indexTemp].username), Toast.LENGTH_LONG).show()
+            mainHandler.removeCallbacks(runnable)
+            goToLeaderboard()
+        }
+    }
+
+
+    private fun goToLeaderboard() {
+        val doorSound = MediaPlayer.create(this, R.raw.door)
+        doorSound.start()
+        Timer("SoundTemporisation", false).schedule(500) {
+            val intentLeaderboard = Intent(this@GameActivity, ScoreboardActivity::class.java)
+            intentLeaderboard.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            this@GameActivity.startActivity(intentLeaderboard)
+        }
+    }
+
+    private fun doGrelotte() {
+        if (gameParameters.dice_figure.figure == "suite") {
+            firebaseRef.child("users").child(matchmakingSettings?.getString("userKey", null)?:"").child("sum_grelotte").setValue(usersList.find { it.user_key == matchmakingSettings?.getString("userKey", null)?:"" }?.sum_grelotte?.plus(1))
+        }
+        else {
+            Toast.makeText(this@GameActivity, R.string.fail, Toast.LENGTH_LONG).show()
+            firebaseRef.child("users").child(matchmakingSettings?.getString("userKey", null)?:"").child("score").setValue(usersList.find { it.user_key == matchmakingSettings?.getString("userKey", null)?:"" }?.score?.minus(5))
+        }
+    }
+
+    private fun doPasMou() {
+        if (gameParameters.dice_figure.figure == "chouettevelute") {
+            firebaseRef.child("users").child(matchmakingSettings?.getString("userKey", null)?:"").child("sum_pasmou").setValue(usersList.find { it.user_key == matchmakingSettings?.getString("userKey", null)?:"" }?.sum_pasmou?.plus(1))
+        }
+        else {
+            Toast.makeText(this@GameActivity, R.string.fail, Toast.LENGTH_LONG).show()
+            firebaseRef.child("users").child(matchmakingSettings?.getString("userKey", null)?:"").child("score").setValue(usersList.find { it.user_key == matchmakingSettings?.getString("userKey", null)?:"" }?.score?.minus(5))
+        }
+    }
+
+    private fun doSirop() {
+        /* Sirop:
+        Lance une animation pour le dé à siroter chez tout le monde
+        */
+    }
+
+    private fun doCalculatePoints() {
+        if (gameParameters.dice_figure.figure == "chouette") {
+            firebaseRef.child("users").child(matchmakingSettings?.getString("userKey", null)?:"").child("score").setValue(usersList.find { it.user_key == matchmakingSettings?.getString("userKey", null)?:"" }?.score?.plus(gameParameters.dice_figure.valueFigure*gameParameters.dice_figure.valueFigure))
+        }
+        else if (gameParameters.dice_figure.figure == "culdechouette") {
+            firebaseRef.child("users").child(matchmakingSettings?.getString("userKey", null)?:"").child("score").setValue(usersList.find { it.user_key == matchmakingSettings?.getString("userKey", null)?:"" }?.score?.plus((gameParameters.dice_figure.valueFigure + 4)*10))
+        }
+        /*Implementer le Sirop*/
+        else if (gameParameters.dice_figure.figure == "velute") {
+            var scoreTemp = 0
+            when (gameParameters.dice_figure.valueFigure) {
+                2-> {scoreTemp = 8}
+                3-> {scoreTemp = 18}
+                4-> {scoreTemp = 32}
+                5-> {scoreTemp = 50}
+                6-> {scoreTemp = 72}
+            }
+            firebaseRef.child("users").child(matchmakingSettings?.getString("userKey", null)?:"").child("score").setValue(usersList.find { it.user_key == matchmakingSettings?.getString("userKey", null)?:"" }?.score?.plus(scoreTemp))
+        }
+        else if (gameParameters.dice_figure.figure == "suite") {
+            var min = 800
+            var key: String = ""
+            for (index in 0 until usersList.size) {
+                if (usersList[index].sum_grelotte <= min) {
+                    min = usersList[index].sum_grelotte
+                    key = usersList[index].user_key
+                }
+            }
+            firebaseRef.child("users").child(key).child("score").setValue(usersList.find { it.user_key == key }?.score?.minus(10))
+        }
+    }
+
+    private fun doChangeTurn() {
+        var currentUser = usersList.find { it.user_key == matchmakingSettings?.getString("userKey", null)?:""}
+        var listIndex = -1
+        for (index in (0 until usersList.size)) {
+            if (usersList[index] == currentUser) {
+                listIndex = index
+                break
+            }
+        }
+        if (listIndex == usersList.size - 1) {
+              listIndex = 0
+        }
+        else {
+            listIndex++
+        }
+        Log.i("testDice", usersList[listIndex].user_key)
+        firebaseRef.child("game_parameters").child("user_turn").setValue(usersList[listIndex].user_key)
+    }
+
+    private fun doCleanFirebase() {
+        for (index in (0 until usersList.size)) {
+            firebaseRef.child("users").child(usersList[index].user_key).child("sum_pasmou").setValue(0)
+            firebaseRef.child("users").child(usersList[index].user_key).child("sum_grelotte").setValue(0)
+        }
+        firebaseRef.child("game_parameters").child("dice_figure").setValue(DiceFigure())
+        firebaseRef.child("game_parameters").child("timer_launched").setValue(0)
+        firebaseRef.child("game_parameters").child("dice_value_changed").setValue(false)
+    }
+
+    private fun checkFigure() {
+        val figure = DiceFigure()
+        val minValue: Int = mutableListOf(valuedice1, valuedice2, valueCDC).min()?.plus(1)!!
+        val maxValue: Int = mutableListOf(valuedice1, valuedice2, valueCDC).max()?.plus(1)!!
+        val mediumValueList: MutableList<Int> = mutableListOf(valuedice1, valuedice2, valueCDC)
+        mediumValueList.remove(minValue)
+        mediumValueList.remove(maxValue)
+        val mediumValue = mediumValueList[0].plus(1)
+        if(( valuedice1 == valuedice2)&&(valuedice2 == valueCDC)) {
+            figure.figure = "culdechouette"
+            figure.valueFigure = valueCDC + 1
+        }
+        else if ((valuedice1 == valuedice2)||(valuedice1 == valueCDC)||(valuedice2 == valueCDC)) {
+            val lastIndexD1: Int = listOf(valuedice1, valuedice2, valueCDC).lastIndexOf(valuedice1)
+            figure.figure = "chouette"
+            when (lastIndexD1) {
+                0-> {
+                    figure.valueFigure = valuedice2 + 1
+                    figure.sirop_dice = valuedice1
+                }
+                1-> {
+                    figure.valueFigure = valuedice2 + 1
+                    figure.sirop_dice = valueCDC
+                }
+                2-> {
+                    figure.valueFigure = valueCDC + 1
+                    figure.sirop_dice = valuedice2
+                }
+            }
+        }
+        else if ((mediumValue == minValue + 1)&&(maxValue == mediumValue + 1)) {
+            figure.figure = "suite"
+        }
+        else if (minValue + mediumValue == maxValue) {
+            if (minValue == mediumValue) {
+                figure.figure = "chouettevelute"
+            }
+            else {
+                figure.figure = "velute"
+            }
+            figure.valueFigure = maxValue
+        }
+        firebaseRef.child("game_parameters").child("dice_figure").setValue(figure)
+    }
+
 }
-
-//Ajouter dans la firebase:
-

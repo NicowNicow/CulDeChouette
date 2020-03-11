@@ -2,8 +2,11 @@
   <dictionary name="Nico">
     <words>
       <w>agit</w>
+      <w>alors</w>
       <w>annulation</w>
       <w>annuler</w>
+      <w>appui</w>
+      <w>appuie</w>
       <w>appuye</w>
       <w>appuyer</w>
       <w>arreter</w>
@@ -13,12 +16,14 @@
       <w>autres</w>
       <w>bevue</w>
       <w>bouton</w>
+      <w>boutons</w>
       <w>caillou</w>
       <w>cependant</w>
       <w>changement</w>
       <w>choisir</w>
       <w>choisissez</w>
       <w>chouette</w>
+      <w>chouettevelute</w>
       <w>clickables</w>
       <w>commencer</w>
       <w>confirmer</w>
@@ -38,6 +43,7 @@
       <w>egales</w>
       <w>encaisser</w>
       <w>entrez</w>
+      <w>erreur</w>
       <w>existante</w>
       <w>faire</w>
       <w>faisant</w>
@@ -56,7 +62,10 @@
       <w>joueur</w>
       <w>joueurs</w>
       <w>lancés</w>
+      <w>lateraux</w>
       <w>leaderboard</w>
+      <w>leaderboards</w>
+      <w>listerners</w>
       <w>listview</w>
       <w>logochouette</w>
       <w>lorsqu</w>
@@ -66,6 +75,7 @@
       <w>nombre</w>
       <w>obtenir</w>
       <w>parametres</w>
+      <w>pasmou</w>
       <w>perd</w>
       <w>perds</w>
       <w>peut</w>
@@ -112,6 +122,7 @@
       <w>valider</w>
       <w>valuedice</w>
       <w>velute</w>
+      <w>victoire</w>
       <w>voulez</w>
       <w>vous</w>
       <w>écran</w>
