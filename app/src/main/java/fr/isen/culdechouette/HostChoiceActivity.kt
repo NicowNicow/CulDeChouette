@@ -126,7 +126,7 @@ class HostChoiceActivity : AppCompatActivity() {
     private fun addUser() {
         val keyFetched = matchmakingSettings?.getString("roomKey", null)?:""
         val keyInitialUser = firebaseRef.child(keyFetched).child("users").push().key!!
-        val initialUser = User(keyInitialUser,usernamePref?.getString("usernameKey", null)?:"", 0, false)
+        val initialUser = User(keyInitialUser,usernamePref?.getString("usernameKey", null)?:"", 0, false, false)
         firebaseRef.child(keyFetched).child("users").child(keyInitialUser).setValue(initialUser)
         matchmakingSettings?.edit()?.putString("userKey", keyInitialUser)?.apply()
     }
@@ -171,7 +171,7 @@ class HostChoiceActivity : AppCompatActivity() {
 
     private fun fetchRoomValues(snapshot: DataSnapshot) {
         for (index in snapshot.children){
-            var userCount = index.child("users").childrenCount
+            val userCount = index.child("users").childrenCount
             firebaseRef.child(index.key!!).child("room_key").setValue(index.key!!)
             firebaseRef.child(index.key!!).child("user_count").setValue(userCount)
             try {

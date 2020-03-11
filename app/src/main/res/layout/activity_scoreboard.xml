@@ -2,9 +2,40 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/leaderboard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
     tools:context=".ScoreboardActivity">
+
+    <TextView
+        android:id="@+id/leaderboardTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/grafik"
+        android:text="@string/resultsTitle"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.106" />
+
+    <ListView
+        android:id="@+id/leaderboardView"
+        android:layout_width="656dp"
+        android:layout_height="191dp"
+        android:layout_marginTop="20dp"
+        android:alpha="0.4"
+        android:background="#000"
+        android:choiceMode="singleChoice"
+        android:listSelector="@android:color/holo_red_light"
+        app:layout_constraintEnd_toEndOf="@+id/leaderboardTitleText"
+        app:layout_constraintStart_toStartOf="@+id/leaderboardTitleText"
+        app:layout_constraintTop_toBottomOf="@+id/leaderboardTitleText">
+
+    </ListView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

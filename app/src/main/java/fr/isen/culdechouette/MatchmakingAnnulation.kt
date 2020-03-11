@@ -34,6 +34,21 @@ class MatchmakingAnnulation(var context: Context, var displayParam: DisplayMetri
         matchmakingDialog?.findViewById<ImageButton>(R.id.confirmButton)?.setOnClickListener { cancelMatchmaking(matchmakingDialog, context, firebaseRef, userKey , roomKey) }
     }
 
+    fun windowStopMatchmakingInGame() {
+        val matchmakingDialogBuilder: AlertDialog.Builder? = context.let { AlertDialog.Builder(it) }
+        val layoutParams: WindowManager.LayoutParams? = WindowManager.LayoutParams()
+        val layoutInflater = LayoutInflater.from(context)
+        layoutParams?.width = (displayParam.widthPixels.times(0.9f)).toInt()
+        layoutParams?.height = (displayParam.heightPixels.times(0.9f)).toInt()
+        matchmakingDialogBuilder?.setView(layoutInflater.inflate(R.layout.matchmaking_stop_popup, null))?.create()
+        val matchmakingDialog = matchmakingDialogBuilder?.show()
+        matchmakingDialog?.window?.attributes = layoutParams
+        matchmakingDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        matchmakingDialog?.window?.setGravity(Gravity.CENTER)
+        matchmakingDialog?.findViewById<ImageButton>(R.id.cancelButton)?.setOnClickListener { matchmakingDialog.dismiss() }
+        matchmakingDialog?.findViewById<ImageButton>(R.id.confirmButton)?.setOnClickListener { cancelMatchmakingInGame(matchmakingDialog, context, firebaseRef, userKey) }
+    }
+
     private fun cancelMatchmaking(matchmakingDialog: AlertDialog, context: Context, firebaseRef: DatabaseReference, userKey: String, roomKey: String) {
         deleteUserData(firebaseRef, userKey, roomKey)
         var childrenCount: Int
@@ -57,8 +72,8 @@ class MatchmakingAnnulation(var context: Context, var displayParam: DisplayMetri
         goToMainMenu(context)
     }
 
-    fun cancelMatchmakingAppKilled(firebaseRef: DatabaseReference, userKey: String, roomKey: String) {
-        deleteUserData(firebaseRef, userKey, roomKey)
+    private fun cancelMatchmakingInGame(matchmakingDialog: AlertDialog, context: Context, firebaseRef: DatabaseReference, userKey: String) {
+        deleteUserDataInGame(firebaseRef, userKey)
         var childrenCount: Int
         firebaseRef.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
@@ -67,19 +82,20 @@ class MatchmakingAnnulation(var context: Context, var displayParam: DisplayMetri
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     childrenCount = snapshot.child(roomKey).child("users").childrenCount.toInt()
-                    if (childrenCount == 0) {
-                        deleteRoomData(firebaseRef, roomKey)
-                    }
-                    else {
-                        firebaseRef.child(roomKey).child("user_count").setValue(childrenCount)
-                    }
+                    firebaseRef.child(roomKey).child("user_count").setValue(childrenCount)
                 }
             }
         })
+        matchmakingDialog.dismiss()
+        goToMainMenu(context)
     }
 
     private fun deleteUserData(firebaseRef: DatabaseReference, userKey: String, roomKey: String) {
         firebaseRef.child(roomKey).child("users").child(userKey).removeValue()
+    }
+
+    private fun deleteUserDataInGame(firebaseRef: DatabaseReference, userKey: String) {
+        firebaseRef.child("users").child(userKey).removeValue()
     }
 
     private fun deleteRoomData(firebaseRef: DatabaseReference, roomKey: String) {

@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import android.os.IBinder
 import android.media.MediaPlayer
 import android.os.Binder
+import android.util.Log
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
@@ -79,10 +80,14 @@ class BackgroundMusicService: Service(){
 
     fun restartMusic() {
         val muteSaved = musicPref?.getString("muteKey", null)?:"false"
-        if (muteSaved == "false")
-        {
-            backgroundMusic.seekTo(mediaPauseLength)
-            backgroundMusic.start()
+        try {
+            if (muteSaved == "false") {
+                backgroundMusic.seekTo(mediaPauseLength)
+                backgroundMusic.start()
+            }
+        }
+        catch (error: IllegalStateException) {
+            Log.i("IllegalStateException", error.toString())
         }
     }
 

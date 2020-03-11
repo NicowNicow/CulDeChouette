@@ -9,7 +9,7 @@
     <string name="back">Retour</string>
 
     //MainActivity
-    <string name="touchText">Touchez pour commencer...</string>
+    <string name="touchText">Touchez pour commencer</string>
 
     //HostChoiceActivity
     <string name="createText">Creer</string>
@@ -53,5 +53,20 @@
     <string name="matchmakingText">Voulez-vous arreter le matchmaking et revenir au menu principal?</string>
     <string name="cancelButton">Annuler</string>
     <string name="confirmButton">Confirmer</string>
+
+    //GameActivity
+    <string name="yourTurn">C\'est à vous!</string>
+    <string name="turn">C\'est le tour de %1$s!</string>
+    <string name="ragequit">Tous les autres joueurs ont quittés!</string>
+
+    //ScoreboardActivity
+    <string name="resultsTitle">Resultats</string>
+    <string name="fail">Bevue!</string>
+
+    //ActionBarListView
+    <string name="grelottePicotte">Grelotte ca picotte!</string>
+    <string name="mouCaillou">Pas mou le caillou!</string>
+    <string name="grelottine">Grelottine</string>
+    <string name="sirop">Sirotage</string>
 
 </resources>

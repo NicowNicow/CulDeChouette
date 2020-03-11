@@ -15,12 +15,11 @@
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustResize"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".TestActivity"></activity>
 
         <service
             android:name=".MatchmakingDisconnectedService"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="false" />
 
         <activity
             android:name=".SettingsActivity"
@@ -64,7 +63,6 @@
         <service
             android:name=".BackgroundMusicService"
             android:enabled="true" />
-        <service android:name=".WaitingRoomActivity$MatchmakingDisconnected" />
     </application>
 
 </manifest>

@@ -7,10 +7,14 @@
       <w>arrêter</w>
       <w>attente</w>
       <w>aucune</w>
+      <w>autres</w>
+      <w>bevue</w>
       <w>bouton</w>
+      <w>caillou</w>
       <w>changement</w>
       <w>choisissez</w>
       <w>chouette</w>
+      <w>clickables</w>
       <w>commencer</w>
       <w>confirmer</w>
       <w>creer</w>
@@ -21,30 +25,42 @@
       <w>démarrer</w>
       <w>entrez</w>
       <w>existante</w>
+      <w>finaldice</w>
       <w>firebase</w>
       <w>grafik</w>
+      <w>grelotte</w>
+      <w>grelottine</w>
       <w>isen</w>
       <w>joindre</w>
       <w>joueurs</w>
+      <w>leaderboard</w>
       <w>logochouette</w>
       <w>nombre</w>
       <w>parametres</w>
+      <w>picotte</w>
       <w>pouet</w>
       <w>prefered</w>
       <w>pret</w>
       <w>privee</w>
       <w>privée</w>
       <w>pseudonyme</w>
+      <w>quittés</w>
+      <w>ragequit</w>
       <w>regles</w>
       <w>rejoindre</w>
       <w>rentrez</w>
+      <w>resultats</w>
       <w>retour</w>
       <w>revenir</w>
       <w>salle</w>
+      <w>sirop</w>
+      <w>sirotage</w>
       <w>sélectionez</w>
       <w>temporisation</w>
       <w>touchez</w>
+      <w>tous</w>
       <w>valider</w>
+      <w>valuedice</w>
       <w>voulez</w>
       <w>vous</w>
     </words>

@@ -14,7 +14,7 @@ class LobbyListAdapter(private val ctxt: Context, private val layoutID: Int, pri
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val layoutInflater : LayoutInflater = LayoutInflater.from(ctxt)
-        val view : View = layoutInflater.inflate(layoutID, null)
+        val view : View = layoutInflater.inflate(layoutID, parent, false)
         val user = userList[position]
         val usernameValue = view.findViewById<TextView>(R.id.usernameListElement)
         val userReady = view.findViewById<ImageView>(R.id.readyBox)
@@ -28,3 +28,18 @@ class LobbyListAdapter(private val ctxt: Context, private val layoutID: Int, pri
         return view
     }
 }
+
+class ResultsAdapter(private val ctxt: Context, private val layoutID: Int, private val userList: List<User>) : ArrayAdapter<User>(ctxt, layoutID, userList) {
+
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        val layoutInflater : LayoutInflater = LayoutInflater.from(ctxt)
+        val view : View = layoutInflater.inflate(layoutID, parent, false)
+        val user = userList[position]
+        val usernameValue = view.findViewById<TextView>(R.id.username)
+        val rankValue = view.findViewById<TextView>(R.id.rank)
+        usernameValue.text = user.username
+        rankValue.text = user.score.toString()
+        return view
+    }
+}
+

@@ -6,9 +6,12 @@ import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.IBinder
+import android.util.DisplayMetrics
 import android.view.View
 import android.view.WindowManager
 import android.widget.SeekBar
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
@@ -21,6 +24,9 @@ class SettingsActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener{
     private var musicPref: SharedPreferences? = null
     private lateinit var musicService: BackgroundMusicService
     private var musicServiceBound: Boolean = false
+    private lateinit var matchmakingAnnulation: MatchmakingAnnulation
+    private lateinit var  firebaseRef: DatabaseReference
+    private var matchmakingSettings : SharedPreferences? = null
 
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, service: IBinder) {
@@ -41,7 +47,27 @@ class SettingsActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener{
         backButton.setOnClickListener { doBack() }
         muteButton.setOnClickListener { doMute() }
         volumeBar.setOnSeekBarChangeListener(this)
+        setUpFirebaseSharedPref()
+        setUpMatchmakingCancellation()
+        startService(Intent(this@SettingsActivity, MatchmakingDisconnectedService::class.java))
         checkPreferences()
+    }
+
+    private fun setUpFirebaseSharedPref() {
+        matchmakingSettings = getSharedPreferences("currentRoom", Context.MODE_PRIVATE)
+        firebaseRef= FirebaseDatabase.getInstance().getReference("waiting_rooms").child(matchmakingSettings?.getString("roomKey", null)?:"")
+    }
+
+    private fun setUpMatchmakingCancellation() {
+        val displayParam: DisplayMetrics? = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(displayParam)
+        matchmakingAnnulation = MatchmakingAnnulation(this@SettingsActivity, displayParam!!,
+            matchmakingSettings?.getString("userKey", null)?:"",
+            matchmakingSettings?.getString("roomKey", null)?:"", firebaseRef)
+    }
+
+    override fun onBackPressed() {
+        matchmakingAnnulation.windowStopMatchmakingInGame()
     }
 
     override fun onResume() {

@@ -88,7 +88,7 @@ class CreationRoomActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
 
     private fun modifyGameRoomParameters() {
         val keyInitialUser = firebaseRef.child(firebaseRoomKey).child("users").push().key!!
-        val initialUser = User(keyInitialUser,usernamePref?.getString("usernameKey", null)?:"", 0, false)
+        val initialUser = User(keyInitialUser,usernamePref?.getString("usernameKey", null)?:"", 0, false, false)
         roomCreation.room_key = firebaseRoomKey
         roomCreation.game_started_boolean = false
         roomCreation.game_parameters = GameParameters()
@@ -120,7 +120,7 @@ class CreationRoomActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) { //Method of the OnItemSelected Interface
-        var value = parent.getItemAtPosition(pos).toString().toInt()
+        val value = parent.getItemAtPosition(pos).toString().toInt()
         roomCreation.capacity=value
     }
 
